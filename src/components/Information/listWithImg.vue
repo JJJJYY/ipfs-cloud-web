@@ -1,4 +1,5 @@
 <template>
+<!-- 资讯相关列表 -->
   <div class='info-list'>
     <div class="info-item" v-for='(item,index) in list' :key='index'>
      <img src="" class='item-img' alt="" @click='viewDetail(item.id)'>

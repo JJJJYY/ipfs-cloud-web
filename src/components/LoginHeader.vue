@@ -1,4 +1,5 @@
 <template>
+<!-- 登录页面的header -->
   <div class='login-header'>
     <div class="header-content">
       <img  @click="$goto('/')" src="@/assets/image/logo.png" class='logo pointer' alt="">

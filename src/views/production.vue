@@ -5,7 +5,7 @@
     <div class="production-content">
       <div class="content-hint">
         {{$t('message.__WXTSYRHWTHYLXKFLXDH__')}}
-        <span class='orange-mark pointer' @click="$goto('/help')">{{$t('message.__BZZX__')}}</span>
+        <span class='orange-mark pointer' @click="$goto('/information?tab=help')">{{$t('message.__BZZX__')}}</span>
       </div>
       <div class="panel">
         <div class="product-row">

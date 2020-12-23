@@ -38,6 +38,11 @@ const routes = [
     ]
   },
   {
+    path: '/mineOrderDetail',
+    name: 'mineOrderDetail',
+    component: () => import('../views/personal-center/mine-order-detail.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../views/login/index')

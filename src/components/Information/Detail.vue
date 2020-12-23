@@ -1,4 +1,5 @@
 <template>
+<!-- 资讯详情 -->
   <div class='information-detail'>
     <div class="breadcrumb" @click='goBack'>
       <a-icon type="left" />返回<span class='split-line'></span>{{higherLevel}}

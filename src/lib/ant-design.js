@@ -7,7 +7,8 @@ import {
     Input,
     DatePicker,
     Select,
-    Checkbox
+    Checkbox,
+    Modal
 } from 'ant-design-vue';
 
 Vue.use(Button)
@@ -18,3 +19,4 @@ Vue.use(Input)
 Vue.use(DatePicker)
 Vue.use(Select)
 Vue.use(Checkbox)
+Vue.use(Modal)

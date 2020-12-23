@@ -7,15 +7,15 @@
       <div class="subtitle">公告、新闻、帮助中心</div>
     </div>
     <div class='tabs'>
-      <div :class="['tab',activeTab==='notice'?'active':'']" @click="changeTab('notice','信息公告')">
+      <div :class="['tab',activeTab==='notice'?'active':'']" @click="changeTab('notice')">
         <div class="title">公告</div>
         <div class="subtitle">最新信息公告</div>
       </div>
-      <div :class="['tab',activeTab==='news'?'active':'']" @click="changeTab('news','最新资讯')">
+      <div :class="['tab',activeTab==='news'?'active':'']" @click="changeTab('news')">
         <div class="title">新闻</div>
         <div class="subtitle">最新资讯</div>
       </div>
-      <div :class="['tab',activeTab==='help'?'active':'']" @click="changeTab('help','帮助中心')">
+      <div :class="['tab',activeTab==='help'?'active':'']" @click="changeTab('help')">
         <div class="title">帮助</div>
         <div class="subtitle">帮助中心</div>
       </div>
@@ -55,7 +55,17 @@ export default {
     return {
       showDetail: false,
       activeTab: 'notice',
-      activeLabel: '信息公告',
+      labelMap: {
+        notice: '信息公告',
+        news: '最新资讯',
+        help: '帮助中心',
+      },
+    }
+  },
+  created() {
+    const tab = this.$route.query.tab
+    if (this.labelMap[tab]) {
+      this.activeTab = tab
     }
   },
   methods: {
@@ -65,7 +75,7 @@ export default {
     },
     handleViewDetail(id) {
       this.showDetail = true
-      this.$refs.DetailPanel.render(id, this.activeLabel)
+      this.$refs.DetailPanel.render(id, this.labelMap[this.activeTab])
     }
   }
 }

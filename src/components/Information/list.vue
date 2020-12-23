@@ -1,4 +1,5 @@
 <template>
+<!-- 资讯相关列表 -->
   <div class='notice-list'>
     <div class="notice-item" v-for='(item,index) in list' :key='index' @click='viewDetail(item.id)'>
       <span class='orange-cube'></span>

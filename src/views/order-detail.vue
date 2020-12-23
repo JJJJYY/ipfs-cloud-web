@@ -27,10 +27,13 @@
         </div>
 
         <div class='amount-selector'>
-          <a-input>
-            <a-icon slot="addonBefore" type="minus" />
-            <a-icon slot="addonAfter" type="plus" />
-          </a-input>
+          <span class='minus-btn' @click='handleReduce'>
+            <a-icon type="minus" />
+          </span>
+          <a-input v-model="amount"></a-input>
+          <span class='plus-btn' @click='handleAdd'>
+            <a-icon type="plus" />
+          </span>
           集群
         </div>
       </div>
@@ -55,6 +58,7 @@ export default {
   },
   data() {
     return {
+      amount: 1,
       productList: [{
         name: '分布式存储服务器',
         model: 'STC036（4U 36盘位 576T）',
@@ -80,6 +84,18 @@ export default {
         amount: '数量：1台',
         total: '288800'
       }]
+    }
+  },
+  methods: {
+    handleReduce() {
+      if (this.amount - 1 > 0) {
+        this.amount -= 1
+      } else {
+        this.amount = 1
+      }
+    },
+    handleAdd() {
+      this.amount += 1
     }
   }
 }
@@ -158,6 +174,32 @@ export default {
     }
   }
 }
+.amount-selector{
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  font-size: 18px;
+  color: #666666;
+  .minus-btn{
+    height: 39px;
+    line-height: 39px;
+    padding:0 12px;
+    border:1px solid #CDCDCD;
+    border-right: none;
+    cursor: pointer;
+    border-radius: 4px 0 0 4px;
+  }
+  .plus-btn{
+    height: 39px;
+    line-height: 39px;
+    padding:0 12px;
+    border:1px solid #CDCDCD;
+    border-left: none;
+    margin-right: 17px;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+  }
+}
 .computed-row{
   display: flex;
   justify-content: flex-end;
@@ -179,5 +221,14 @@ export default {
       font-size: 24px;
     }
   }
+}
+</style>
+
+<style lang="less" >
+.amount-selector .ant-input{
+  border-radius: 0;
+  height: 39px;
+  width: 97px;
+  text-align: center;
 }
 </style>

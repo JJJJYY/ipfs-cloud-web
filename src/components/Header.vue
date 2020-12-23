@@ -14,13 +14,14 @@
       <div class="header-right row-center">
         <div class="header-button pointer" @click="$goto('/login')">{{$t('message.__DL__')}}</div>
         <div class="header-button primary pointer"  @click="$goto('/register')">{{$t('message.__ZC__')}}</div>
-        <!-- <div class="user-name-select">
-          <div class="name">150 2563 3652<a-icon type="down" class='down-icon'/></div>
-        </div> -->
-        <!-- <div class="user-name-select">
-          <div class="name">150 2563 3652<a-icon type="down" class='down-icon'/></div>
-        </div> -->
 
+        <div class="user-name-select">
+          <div class="name">150 2563 3652<a-icon type="down" class='down-icon'/></div>
+          <div class='select-panel'>
+            <div class='select-item item-1' @click="$goto('/mine')">个人中心</div>
+            <div class='select-item'>退出登录</div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -90,10 +91,45 @@ export default {
   .header-button + .header-button{
     margin-left:22px;
   }
+}
+.user-name-select{
+  position: relative;
+  &:hover{
+    .select-panel{
+      display: block;
+    }
+  }
+  >.name{
+    font-size: 16px;
+    line-height: 14px;
+    color: #FFFFFF;
+    padding:10px 0;
+  }
   .down-icon{
     width:15px;
     height: 9px;
     font-size: 15px;
+    margin-left: 9px;
+  }
+  .select-panel{
+    display: none;
+    position: absolute;
+    width:100%;
+    // margin-top:10px;
+    background-color: #fff;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #333333;
+    text-align: center;
+    padding:15px 0 18px;
+    .select-item{
+      cursor: pointer;
+    }
+    .item-1{
+      margin-bottom:16px;
+    }
   }
 }
 </style>

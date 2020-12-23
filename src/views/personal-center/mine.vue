@@ -79,6 +79,7 @@ export default {
     margin-right:9px;
   }
   .user-info-cube{
+    width:184px;
     padding:34px 0 26px;
     text-align: center;
     .ant-avatar{

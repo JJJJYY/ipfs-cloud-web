@@ -1,4 +1,5 @@
 <template>
+<!-- 主页固定 联系我们 -->
   <div class='contact-us'>
       <div class="qrcode-panel">
         <img src="" class='qrcode-img' alt="">
