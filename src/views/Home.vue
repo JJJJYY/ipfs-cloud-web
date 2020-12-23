@@ -7,24 +7,28 @@
         <span class='btn'>一键开启</span>
       </div>
       <div class="split-line"></div>
-      <div class="hint hint-2">轻松获取有效存储算力，键化繁琐的步骤，直接开启存储算力</div>
 
-      <div class="cube-row">
-        <div>
-          <img src="@/assets/image/home-cube1.png" class='cube-img' alt="">
-          <div class="label">用户购买服务</div>
-        </div>
-        <div>
-          <img src="@/assets/image/home-cube2.png" class='cube-img' alt="">
-          <div class="label">底单排期</div>
-        </div>
-        <div>
-          <img src="@/assets/image/home-cube3.png" class='cube-img' alt="">
-          <div class="label">服务开启</div>
-        </div>
-        <div>
-          <img src="@/assets/image/home-cube4.png" class='cube-img' alt="">
-          <div class="label">稳定服务</div>
+      <div class="area-1">
+        <div class="area-title">轻松挖矿</div>
+        <div class="hint hint-2">轻松获取有效存储算力，键化繁琐的步骤，直接开启存储算力</div>
+
+        <div class="cube-row">
+          <div>
+            <img src="@/assets/image/home-cube1.png" class='cube-img' alt="">
+            <div class="label">用户购买服务</div>
+          </div>
+          <div>
+            <img src="@/assets/image/home-cube2.png" class='cube-img' alt="">
+            <div class="label">底单排期</div>
+          </div>
+          <div>
+            <img src="@/assets/image/home-cube3.png" class='cube-img' alt="">
+            <div class="label">服务开启</div>
+          </div>
+          <div>
+            <img src="@/assets/image/home-cube4.png" class='cube-img' alt="">
+            <div class="label">稳定服务</div>
+          </div>
         </div>
       </div>
 
@@ -108,7 +112,8 @@ export default {
     margin:33px 0 37px;
   }
   &.hint-2{
-    margin-bottom: 62px;
+    font-size: 16px;
+    margin-bottom: 39px;
   }
 }
 .button{
@@ -123,8 +128,17 @@ export default {
   }
 }
 .split-line{
-  margin:36px 0 71px;
+  margin:36px 0 54px;
   border-top: 1px solid #F3F3F3;
+}
+.area-1{
+  .area-title{
+    font-size: 30px;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+    margin-bottom:15px;
+  }
 }
 .cube-row{
   display: flex;
