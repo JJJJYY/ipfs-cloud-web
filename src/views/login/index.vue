@@ -8,12 +8,16 @@
       <div class='input-panel'>
         <div class="panel-title">{{$t('message.__DL__')}}</div>
         <div class="panel-content">
-          <a-input v-model="username" :placeholder="$t('message.__SJHYXDZ__')" allowClear size='large'></a-input>
-          <a-input v-model="password" class='input-2' :placeholder="$t('message.__SRMM__')" allowClear size='large'></a-input>
+          <a-input v-model="username" :placeholder="$t('message.__SJHYXDZ__')" allowClear
+            size='large' :maxLength='30'></a-input>
+          <a-input-password v-model="password" class='input-2' :placeholder="$t('message.__SRMM__')"
+            allowClear size='large' :maxLength='30'></a-input-password>
           <a-button type='primary' @click='login'>{{$t('message.__LJDL__')}}</a-button>
           <div class='login-hint'>
-            <div>{{$t('message.__MYZH__')}}<span class='orange-mark pointer' @click="$goto('/register')">{{$t('message.__ZC__')}}</span></div>
-            <div class='orange-mark pointer'  @click="$goto('/findPassword')">{{$t('message.__WJMM__')}}</div>
+            <div>{{$t('message.__MYZH__')}}<span class='orange-mark pointer'
+                @click="$goto('/register')">{{$t('message.__ZC__')}}</span></div>
+            <div class='orange-mark pointer' @click="$goto('/findPassword')">
+              {{$t('message.__WJMM__')}}</div>
           </div>
         </div>
       </div>
@@ -22,7 +26,9 @@
 </template>
 
 <script>
+import md5 from 'md5'
 import LoginHeader from '../../components/LoginHeader'
+import { login } from '../../api/index'
 
 export default {
   components: {
@@ -36,7 +42,24 @@ export default {
   },
   methods: {
     login() {
-
+      if (!this.username || !this.password) {
+        this.$message.error('请输入登录信息！')
+        return
+      }
+      login({
+        username: this.username,
+        password: md5(this.password)
+      }).then(res => {
+        const data = res.data || {}
+        if (data.token) {
+          localStorage.setItem('token', 'Bearer ' + data.token)
+        }
+        this.$store.commit('updateUser', data.user)
+        this.$message.success('登录成功！')
+        this.$router.replace('/')
+      }).catch(err => {
+        this.$message.error(err)
+      })
     }
   }
 }

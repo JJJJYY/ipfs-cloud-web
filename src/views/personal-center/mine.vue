@@ -8,8 +8,8 @@
             <a-avatar :size="64" icon="user" />
           </div>
           <span class="user-rank">普通会员</span>
-          <div class="phone">135 2365 2356</div>
-          <div class="uid">UID：1525486</div>
+          <div class="phone">{{ user.user_name }}</div>
+          <div class="uid">UID：{{ user.id }} </div>
         </div>
         <div class="nav-cube cube">
           <!-- <div class="nav-item" @click="$goto('/mine/assets')">
@@ -18,12 +18,15 @@
             资金管理
           </div> -->
           <div :class="['nav-item',activeKey==='order'?'active':'']" @click="$goto('/mine/order')">
-            <img v-if="activeKey==='order'" src="@/assets/image/order-active.png" class='nav-img' alt="">
+            <img v-if="activeKey==='order'" src="@/assets/image/order-active.png" class='nav-img'
+              alt="">
             <img v-else src="@/assets/image/order.png" class='nav-img' alt="">
             我的订单
           </div>
-          <div :class="['nav-item',activeKey==='setting'?'active':'']" @click="$goto('/mine/setting')">
-            <img  v-if="activeKey==='setting'" src="@/assets/image/account-active.png"  class='nav-img' alt="">
+          <div :class="['nav-item',activeKey==='setting'?'active':'']"
+            @click="$goto('/mine/setting')">
+            <img v-if="activeKey==='setting'" src="@/assets/image/account-active.png"
+              class='nav-img' alt="">
             <img v-else src="@/assets/image/account.png" class='nav-img' alt="">
             账号设置
           </div>
@@ -42,7 +45,7 @@ import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
 
 export default {
- components: {
+  components: {
     Header,
     Footer,
   },
@@ -51,8 +54,13 @@ export default {
       activeKey: ''
     }
   },
+  computed: {
+    user() {
+      return this.$store.state.user
+    }
+  },
   created() {
-      this.activeKey = this.$route.path.replace('/mine/', '')
+    this.activeKey = this.$route.path.replace('/mine/', '')
   },
   beforeRouteUpdate(to, from, next) {
     const path = to.path

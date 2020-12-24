@@ -2,32 +2,32 @@
   <div class='product-item'>
     <div class="product-panel">
       <div class="title">
-        <a-checkbox v-model="isSelected" @change='handleSelect'></a-checkbox>
-        {{product.name}}
-        <img src="@/assets/image/down-icon.png" class='open-icon' alt="" v-if="direction==='top' && !open" @click='handleOpen'>
-        <img src="@/assets/image/down-icon-active.png" class='open-icon' alt="" v-if="direction==='top' && open" @click='handleOpen'>
+        <a-checkbox v-model="isSelected" @change='handleSelect'>
+          {{ data.type && data.type.product_type_name || ''}}</a-checkbox>
+
       </div>
-      <div class="introduce">{{product.introduce}}</div>
+      <div class="introduce">{{ data.introduction }}</div>
       <div class="config-items">
-        <div v-if='product.model' class='item'>
+        <div v-if='data.specs' class='item'>
           <div class="label">规格型号</div>
-          <div class="label">{{product.model}}</div>
+          <div class="label">{{ data.specs }}</div>
         </div>
-        <div v-if='product.price'  class='item'>
-          <div class="label">单价/台</div>
-          <div class="label">{{product.price}}</div>
+        <div v-if='data.price' class='item'>
+          <div class="label">单价/{{ data.type && data.type.unit || ''}}</div>
+          <div class="label">{{ data.price }}</div>
         </div>
-          <div v-if='product.min'  class='item'>
-          <div class="label">最低起购/T</div>
-          <div class="label">{{product.min}}</div>
+        <div v-if='data.lowest_num' class='item'>
+          <div class="label">最低起购/{{ data.type && data.type.unit || ''}}</div>
+          <div class="label">{{ data.lowest_num }}</div>
         </div>
       </div>
       <div class='panel-footer'>
         <div>{{$t('message.__JG__')}}
-          <span class='price'>￥{{price}}</span></div>
-        <div class="open-icon" @click='handleOpen'>
-          <img src="@/assets/image/down-icon.png" alt="" v-if="direction!=='top' && !open">
-          <img src="@/assets/image/down-icon-active.png" alt=""  v-if="direction!=='top' && open">
+          <span class='price'>￥{{ data.price }}</span>
+        </div>
+        <div v-if='data.info && data.info.length!==0' class="open-icon" @click='handleOpen'>
+          <img src="@/assets/image/down-icon.png" alt="" v-if=" !open">
+          <img src="@/assets/image/down-icon-active.png" alt="" v-if="open">
         </div>
       </div>
     </div>
@@ -37,31 +37,27 @@
 <script>
 export default {
   props: {
-    direction: {
-      type: String,
-      default: null
-    },
-    id: {
-      type: String,
+    data: {
+      type: Object,
       default: null
     },
     activeId: {
-      type: String,
+      type: [String, Number],
       default: null
     },
-    selectAll: {
-      type: Boolean,
+    selectedIds: {
+      type: Array,
       default: null
     }
   },
   computed: {
     open() {
-      return this.activeId === this.id
+      return this.activeId === this.data.id
     },
   },
   watch: {
-    selectAll(val) {
-      this.isSelected = val
+    selectedIds(val) {
+      this.isSelected = this.selectedIds.indexOf(this.data.id) !== -1
     }
   },
   data() {
@@ -85,10 +81,10 @@ export default {
   },
   methods: {
     handleSelect() {
-      this.$emit('select', this.id)
+      this.$emit('select')
     },
     handleOpen() {
-      this.$emit('open', this.id)
+      this.$emit('open')
     }
   }
 }
@@ -99,14 +95,11 @@ export default {
   .product-panel{
     padding:33px 25px 26px;
     .title{
-      line-height: 22px;
-      font-size: 22px;
-      font-weight: bold;
-      color: #FF6604;
-      display: flex;
-      align-items: center;
       .ant-checkbox-wrapper{
-        margin-right: 7px;
+        line-height: 22px;
+        font-size: 22px;
+        font-weight: bold;
+        color: #FF6604;
       }
       .open-icon{
         margin-left:auto;

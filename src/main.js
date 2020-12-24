@@ -7,18 +7,24 @@ import i18n from './i18n'
 import './lib/ant-design'
 import './assets/css/common.less'
 
+import { formatTime } from './lib/common'
+
 Vue.config.productionTip = false
+
+Vue.prototype.$formatTime = formatTime
 Vue.prototype.$goto = function (path) {
   const cur = router && router.app && router.app.$route.path
   if (cur === path) {
-      return
+    return
   }
   router.push(path)
 }
 
-new Vue({
+const vue = new Vue({
   router,
   store,
   i18n,
   render: h => h(App)
 }).$mount('#app')
+
+export default vue

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {
+    message,
     Button,
     Icon,
     Affix,
@@ -8,8 +9,11 @@ import {
     DatePicker,
     Select,
     Checkbox,
-    Modal
+    Modal,
+    ConfigProvider,
+    Pagination
 } from 'ant-design-vue';
+Vue.prototype.$message = message;
 
 Vue.use(Button)
 Vue.use(Icon)
@@ -20,3 +24,5 @@ Vue.use(DatePicker)
 Vue.use(Select)
 Vue.use(Checkbox)
 Vue.use(Modal)
+Vue.use(ConfigProvider)
+Vue.use(Pagination)

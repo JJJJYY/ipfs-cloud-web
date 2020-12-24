@@ -10,49 +10,62 @@
         <div class='title'>收货信息</div>
         <div class='content'>
           <span class='label'>姓名：</span>
-          <span class='value'>{{user.name}}</span>
+          <span class='value'>{{ user.express_name }}</span>
           <span class='label label-2'>电话：</span>
-          <span class='value'>{{user.phone}}</span>
+          <span class='value'>{{ user.express_mobile }}</span>
         </div>
       </div>
       <div class='order-info'>
         <div class="info-item">
           <span class="label">订单状态：</span>
-          <span class="value">已支付 </span>
+          <span class="value">{{ detail.status==0?'已取消':detail.status==1?'已下单':'已完成' }} </span>
         </div>
         <div class="info-item">
           <span class="label">订单号：</span>
-          <span class="value">1536481605665233</span>
+          <span class="value">{{ detail.order_code }}</span>
         </div>
         <div class="info-item">
           <span class="label">产品名称：</span>
-          <span class="value">分布式存储云</span>
+          <span class="value">{{ detail.group && detail.group.product_group_name || '' }}</span>
         </div>
         <div class="info-item">
           <span class="label">创建时间：</span>
-          <span class="value">2020-11-18  13:00:00</span>
+          <span class="value">{{ $formatTime(detail.created_at) }}</span>
         </div>
-        <div class="info-item">
+        <div class="info-item" v-if='detail.status ==2 '>
           <span class="label">完成时间：</span>
-          <span class="value">2020-11-18  13:00:00</span>
+          <span class="value">{{ $formatTime(detail.created_at) }}</span>
         </div>
       </div>
       <div class="product-list">
-        <div class="product-item" v-for='(item,index) in productList' :key='index'>
-          <div class='name'>{{item.name}}</div>
-          <div>{{item.model}}</div>
-          <div>{{item.price}}</div>
-          <div>{{item.amount}}</div>
-          <div>小计：<span class='total-price orange-mark'>¥{{item.total}}</span></div>
+        <div class="product-item" v-for='(item,index) in detail.info || []' :key='index'>
+          <div class='cube name'>{{ item.product_name }}</div>
+          <div class='cube'>{{ '--' }}</div>
+          <div class='cube'>单价：{{ item.price }}/{{ item.unit }}</div>
+          <div class='cube'>数量：{{ item.quantity }}{{ item.unit }}</div>
+          <div class='cube flex-6'>小计：<span
+              class='total-price orange-mark'>¥{{ item.total_amount }}</span>
+          </div>
         </div>
-        <div  class="product-item">
-          <div class='name'>专享折扣</div>
-          <div>9.5折</div>
+        <div class="product-item">
+          <div class='cube name'>技术服务费</div>
+          <div class='cube'>20%/年</div>
+          <div class='cube'></div>
+          <div class='cube'></div>
+          <div class='cube flex-6'></div>
+        </div>
+        <div class="product-item" v-if='Number(detail.discount)!=1'>
+          <div class='cube name'>专享折扣</div>
+          <div class='cube'>{{ detail.discount && Number(detail.discount)*10 }}折</div>
+          <div class='cube'></div>
+          <div class='cube'></div>
+          <div class='cube flex-6'></div>
         </div>
       </div>
 
       <div class='fee-info'>
-        <div class="total">总共配置费用：<span class='unit orange-mark'>¥</span><span class='number orange-mark'>568000</span></div>
+        <div class="total">总共配置费用：<span class='unit orange-mark'>¥</span><span
+            class='number orange-mark'>{{ detail.total_amount }}</span></div>
         <div class='hint'>已下单，请稍等，平台客户将主动联系您</div>
       </div>
     </div>
@@ -63,43 +76,41 @@
 <script>
 import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
+import { getOrderDetail } from '../../api/index'
 
 export default {
- components: {
+  components: {
     Header,
     Footer,
   },
   data() {
     return {
       user: {
-        name: '雷锋',
-        phone: '135 4561 1236'
+        express_name: '雷锋',
+        express_mobile: '135 4561 1236'
       },
-      productList: [{
-        name: '分布式存储服务器',
-        model: 'STC036（4U 36盘位 576T）',
-        price: '单价：288000元/台',
-        amount: '数量：1台',
-        total: '288800'
-      }, {
-        name: '分布式存储服务器',
-        model: 'STC036（4U 36盘位 576T）',
-        price: '单价：288000元/台',
-        amount: '数量：1台',
-        total: '288800'
-      }, {
-        name: '分布式存储服务器',
-        model: 'STC036（4U 36盘位 576T）',
-        price: '单价：288000元/台',
-        amount: '数量：1台',
-        total: '288800'
-      }, {
-        name: '分布式存储服务器',
-        model: 'STC036（4U 36盘位 576T）',
-        price: '单价：288000元/台',
-        amount: '数量：1台',
-        total: '288800'
-      }]
+      detail: {},
+      id: undefined
+    }
+  },
+  created() {
+    const id = this.$route.query.id
+    if (!id) {
+      this.$router.go(-1)
+      return
+    }
+    this.id = id
+    this.render()
+  },
+  methods: {
+    render() {
+      getOrderDetail({
+        id: this.id
+      }).then(res => {
+        const data = res.data || {}
+        this.user = data.express || {}
+        this.detail = data
+      })
     }
   }
 }
@@ -135,6 +146,12 @@ export default {
     .total-price{
       font-size: 16px;
       font-weight: 500;
+    }
+    .cube{
+      flex:1;
+    }
+    .flex-6{
+      flex:0.6;
     }
   }
   .product-item + .product-item{

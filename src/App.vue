@@ -1,8 +1,21 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
+
+<script>
+import { getUserProfile } from './api/index'
+
+export default {
+  created() {
+    getUserProfile().then(res => {
+      const user = res.data || {}
+      this.$store.commit('updateUser', user)
+    })
+  }
+}
+</script>
 
 <style lang="less">
 body {

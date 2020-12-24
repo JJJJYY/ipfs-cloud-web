@@ -1,4 +1,18 @@
 module.exports = {
+  devServer: {
+    port: 8081,
+    disableHostCheck: true,
+    open: false,
+    proxy: {
+      '/api': {
+        target: 'http://api.ipfscloud.c28e9d7b637474c3a98b2ed559c29434c.cn-hongkong.alicontainer.com/api',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
+  },
   css: {
     loaderOptions: {
       less: {
@@ -27,5 +41,5 @@ module.exports = {
         views: '@/views',
       },
     },
-  },
+  }
 };

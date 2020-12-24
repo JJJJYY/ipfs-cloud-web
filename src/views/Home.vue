@@ -1,74 +1,77 @@
 <template>
   <div class='home-page'>
-      <Header name='home'></Header>
-      <div class="banner">共 享 储 存 分 享 价 值</div>
-      <div class="hint hint-1">短时间/获取有效存储算力</div>
-      <div class="button">
-        <span class='btn'>一键开启</span>
-      </div>
-      <div class="split-line"></div>
+    <Header name='home'></Header>
+    <div class="banner">共 享 储 存 分 享 价 值</div>
+    <div class="hint hint-1">短时间/获取有效存储算力</div>
+    <div class="button">
+      <span class='btn'>一键开启</span>
+    </div>
+    <div class="split-line"></div>
 
-      <div class="area-1">
-        <div class="area-title">轻松挖矿</div>
-        <div class="hint hint-2">轻松获取有效存储算力，键化繁琐的步骤，直接开启存储算力</div>
+    <div class="area-1">
+      <div class="area-title">轻松挖矿</div>
+      <div class="hint hint-2">轻松获取有效存储算力，键化繁琐的步骤，直接开启存储算力</div>
 
-        <div class="cube-row">
-          <div>
-            <img src="@/assets/image/home-cube1.png" class='cube-img' alt="">
-            <div class="label">用户购买服务</div>
-          </div>
-          <div>
-            <img src="@/assets/image/home-cube2.png" class='cube-img' alt="">
-            <div class="label">底单排期</div>
-          </div>
-          <div>
-            <img src="@/assets/image/home-cube3.png" class='cube-img' alt="">
-            <div class="label">服务开启</div>
-          </div>
-          <div>
-            <img src="@/assets/image/home-cube4.png" class='cube-img' alt="">
-            <div class="label">稳定服务</div>
-          </div>
+      <div class="cube-row">
+        <div>
+          <img src="@/assets/image/home-cube1.png" class='cube-img' alt="">
+          <div class="label">用户购买服务</div>
+        </div>
+        <div>
+          <img src="@/assets/image/home-cube2.png" class='cube-img' alt="">
+          <div class="label">底单排期</div>
+        </div>
+        <div>
+          <img src="@/assets/image/home-cube3.png" class='cube-img' alt="">
+          <div class="label">服务开启</div>
+        </div>
+        <div>
+          <img src="@/assets/image/home-cube4.png" class='cube-img' alt="">
+          <div class="label">稳定服务</div>
         </div>
       </div>
+    </div>
 
-      <div class="area-2">
-        <div class="area-title">核心产品</div>
-        <div class="row-1 panel-row">
-          <div class="panel panel-1">
-            <div class="panel-title">MineOS</div>
-            <div class="panel-info">为IPFS深度定制Linux内核及分布式文件系统IPFS硬件全方位智能管家，稳定、强劲、高效，分布式存储&边缘计算，均可轻松胜任.</div>
-          </div>
-          <div class="panel panel-2">
-            <div class="panel-title">蜘蛛服务器</div>
-            <div class="panel-info">专为IPFS深度定制的分布式存储服务器开发测试网算力第一节点专用硬件，高速数据封存，出块.事行业领先.</div>
+    <div class="area-2">
+      <div class="area-title">核心产品</div>
+      <div class="row-1 panel-row">
+        <div class="panel panel-1">
+          <div class="panel-title">MineOS</div>
+          <div class="panel-info">为IPFS深度定制Linux内核及分布式文件系统IPFS硬件全方位智能管家，稳定、强劲、高效，分布式存储&边缘计算，均可轻松胜任.
           </div>
         </div>
-        <div class="row-2 panel-row">
-          <div class="panel panel-3">
-            <div class="panel-title">FilPool矿池</div>
-            <div class="panel-info">为IPFS深度定制Linux内核及分布式文件系统IPFS硬件全方位智能管家，稳定、强劲、高效，分布式存储&边缘计算，均可轻松胜任.</div>
-          </div>
-          <div class="panel panel-4">
-            <div class="panel-title">矩阵边缘存储器托管服务</div>
-            <div class="panel-info">专业机房、万兆光纤宽带、24小时专人维护、raid阵列升级、持续固件更新..</div>
-          </div>
+        <div class="panel panel-2">
+          <div class="panel-title">蜘蛛服务器</div>
+          <div class="panel-info">专为IPFS深度定制的分布式存储服务器开发测试网算力第一节点专用硬件，高速数据封存，出块.事行业领先.</div>
         </div>
       </div>
-
-      <div class="area-3">
-        <div class="area-content">
-          IPFS Cloud,储算科技倾力打造的云存储品牌，面向全世界客户，提供全球领先的算力、存储等技术软硬产品与服务，以卓越的科技能力打造丰富的解决方案，构建开放共贏的云存储平台，致力于成为下一代分布式网络运营商。
+      <div class="row-2 panel-row">
+        <div class="panel panel-3">
+          <div class="panel-title">FilPool矿池</div>
+          <div class="panel-info">为IPFS深度定制Linux内核及分布式文件系统IPFS硬件全方位智能管家，稳定、强劲、高效，分布式存储&边缘计算，均可轻松胜任.
+          </div>
+        </div>
+        <div class="panel panel-4">
+          <div class="panel-title">矩阵边缘存储器托管服务</div>
+          <div class="panel-info">专业机房、万兆光纤宽带、24小时专人维护、raid阵列升级、持续固件更新..</div>
         </div>
       </div>
+    </div>
 
-      <div class="area-4">
-        <div class="area-title">合作伙伴</div>
+    <div class="area-3">
+      <div class="area-content">
+        IPFS
+        Cloud,储算科技倾力打造的云存储品牌，面向全世界客户，提供全球领先的算力、存储等技术软硬产品与服务，以卓越的科技能力打造丰富的解决方案，构建开放共贏的云存储平台，致力于成为下一代分布式网络运营商。
       </div>
+    </div>
 
-      <Footer></Footer>
+    <div class="area-4">
+      <div class="area-title">合作伙伴</div>
+    </div>
 
-      <ContactUs></ContactUs>
+    <Footer></Footer>
+
+    <ContactUs></ContactUs>
   </div>
 </template>
 

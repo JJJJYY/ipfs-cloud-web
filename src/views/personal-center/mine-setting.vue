@@ -1,32 +1,40 @@
 <template>
-<!-- 账户设置 -->
+  <!-- 账户设置 -->
   <div class='user-settting'>
     <div class="panel-row">
       <div class="panel panel-1">
         <div class="panel-title">
           <img src="@/assets/image/password.png" class='panel-img' alt="">
           登陆密码
-          <div class='btn' @click="changeSetting('loginPassword')">修改<img src="@/assets/image/more.png" class='more-img' alt=""></div>
+          <div class='btn' @click="changeSetting('loginPassword')">修改<img
+              src="@/assets/image/more.png" class='more-img' alt=""></div>
         </div>
         <div class="status">已设置</div>
       </div>
       <div class="panel panel-2">
         <div class="panel-title">
-          <img src="@/assets/image/phone.png"  class='panel-img' alt="">
+          <img src="@/assets/image/phone.png" class='panel-img' alt="">
           手机号
-          <div class='btn' @click="changeSetting('phone')">更换绑定<img src="@/assets/image/more.png" class='more-img'  alt=""></div>
+          <div class='btn' @click="changeSetting('phone')">
+            {{ user.phone? '更换绑定':'去绑定'}}
+            <img src="@/assets/image/more.png" class='more-img' alt="">
+          </div>
         </div>
-        <div class="status">86—132123456</div>
+        <div v-if='!user.phone' class="status">未设置</div>
+        <div v-else class="status">{{ user.phone }}</div>
       </div>
     </div>
     <div class="panel-row">
       <div class="panel panel-3">
         <div class="panel-title">
-          <img src="@/assets/image/email.png"  class='panel-img' alt="">
+          <img src="@/assets/image/email.png" class='panel-img' alt="">
           邮箱号
-          <div class='btn' @click="changeSetting('email')">去绑定<img src="@/assets/image/more.png" class='more-img'  alt=""></div>
+          <div class='btn' @click="changeSetting('email')"> {{ user.email? '更换绑定':'去绑定'}}
+            <img src="@/assets/image/more.png" class='more-img' alt="">
+          </div>
         </div>
-        <div class="status">未设置</div>
+        <div v-if='!user.email' class="status">未设置</div>
+        <div v-else class="status">{{ user.email }}</div>
       </div>
     </div>
 
@@ -40,6 +48,11 @@ import AccountSettingPopup from '../../components/AccountSettingPopup'
 export default {
   components: {
     AccountSettingPopup
+  },
+  computed: {
+    user() {
+      return this.$store.state.user
+    }
   },
   methods: {
     changeSetting(type) {

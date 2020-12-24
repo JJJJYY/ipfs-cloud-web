@@ -2,24 +2,33 @@
   <header class='page-header'>
     <div class="header-content row-center">
       <div class="header-left row-center">
-        <img  src="@/assets/image/logo.png"  @click="$goto('/')" class='logo pointer' alt="">
-        <span class='page-title pointer' @click="$goto('/')">{{$t('message.__FBSCCYJCFWS__')}}</span>
+        <img src="@/assets/image/logo.png" @click="$goto('/')" class='logo pointer' alt="">
+        <span class='page-title pointer'
+          @click="$goto('/')">{{$t('message.__FBSCCYJCFWS__')}}</span>
         <div class="nav-area row-center">
-          <div :class="['nav-item',name==='home'?'active':'']" @click="$goto('/')">{{$t('message.__SY__')}}</div>
-          <div :class="['nav-item',name==='production'?'active':'']"  @click="$goto('/production')">{{$t('message.__CP__')}}</div>
-          <div :class="['nav-item',name==='information'?'active':'']"  @click="$goto('/information')">{{$t('message.__ZX__')}}</div>
-          <div :class="['nav-item',name==='business'?'active':'']" @click="$goto('/business')">{{$t('message.__SW__')}}</div>
+          <div :class="['nav-item',name==='home'?'active':'']" @click="$goto('/')">
+            {{$t('message.__SY__')}}</div>
+          <div :class="['nav-item',name==='production'?'active':'']" @click="$goto('/production')">
+            {{$t('message.__CP__')}}</div>
+          <div :class="['nav-item',name==='information'?'active':'']"
+            @click="$goto('/information')">{{$t('message.__ZX__')}}</div>
+          <div :class="['nav-item',name==='business'?'active':'']" @click="$goto('/business')">
+            {{$t('message.__SW__')}}</div>
         </div>
       </div>
       <div class="header-right row-center">
-        <div class="header-button pointer" @click="$goto('/login')">{{$t('message.__DL__')}}</div>
-        <div class="header-button primary pointer"  @click="$goto('/register')">{{$t('message.__ZC__')}}</div>
+        <div v-show='!user.id' class="header-button pointer" @click="$goto('/login')">
+          {{$t('message.__DL__')}}</div>
+        <div v-show='!user.id' class="header-button primary pointer" @click="$goto('/register')">
+          {{$t('message.__ZC__')}}</div>
 
-        <div class="user-name-select">
-          <div class="name">150 2563 3652<a-icon type="down" class='down-icon'/></div>
+        <div class="user-name-select" v-show='user.id'>
+          <div class="name">{{ user.user_name }}
+            <a-icon type="down" class='down-icon' />
+          </div>
           <div class='select-panel'>
             <div class='select-item item-1' @click="$goto('/mine')">个人中心</div>
-            <div class='select-item'>退出登录</div>
+            <div class='select-item' @click='logout'>退出登录</div>
           </div>
         </div>
       </div>
@@ -28,6 +37,8 @@
 </template>
 
 <script>
+import { logout } from '../api'
+
 export default {
   props: {
     name: {
@@ -35,9 +46,26 @@ export default {
       default: null
     }
   },
+  computed: {
+    user() {
+      return this.$store.state.user
+    }
+  },
   data() {
     return {}
   },
+  methods: {
+    logout() {
+      logout().then(res => {
+        this.$message.success('退出登录成功！')
+        localStorage.removeItem('token')
+        this.$store.commit('updateUser', {})
+        this.$router.replace('/')
+      }).catch(err => {
+        this.$message.error(err || '操作失败，请稍后再试！')
+      })
+    }
+  }
 }
 </script>
 

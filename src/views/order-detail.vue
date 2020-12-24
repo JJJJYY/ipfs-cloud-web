@@ -8,11 +8,23 @@
     <div class='content-panel'>
       <div class="product-list">
         <div class="product-item" v-for='(item,index) in productList' :key='index'>
-          <div class='name'>{{item.name}}</div>
-          <div>{{item.model}}</div>
-          <div>{{item.price}}</div>
-          <div>{{item.amount}}</div>
-          <div>小计：<span class='total-price orange-mark'>¥{{item.total}}</span></div>
+          <div class='cube name'>{{ item.type && item.type.product_type_name || '' }}</div>
+          <div class='cube'>
+            <span v-if='item.specs'>规格型号：{{ item.specs }}</span>
+            <span v-if='item.rate'>{{ item.rate }}</span>
+          </div>
+          <div class='cube'>
+            <span
+              v-if='item.price'>单价：{{ item.price }}/{{ item.type && item.type.unit || ''}}</span>
+          </div>
+          <div class='cube'>
+            <span v-if='item.lowest_num'>数量：{{ item.lowest_num * amount }}
+              {{ item.type && item.type.unit || ''}}</span>
+          </div>
+          <div class='cube flex-75'>
+            <div v-if='item.price'>
+              小计：<span class='total-price orange-mark'>¥{{ item.price * amount }}</span></div>
+          </div>
         </div>
       </div>
       <div class='input-area'>
@@ -20,9 +32,9 @@
           <div class="title">收货人信息<span class='orange-mark'>下单后平台客服将用此电话联系您，请认真填写</span></div>
           <div class='input-row'>
             <div class="label">姓名</div>
-            <a-input allowClear></a-input>
+            <a-input v-model="info.express_name" allowClear :maxLength='20'></a-input>
             <div class="label label-2">电话</div>
-            <a-input allowClear></a-input>
+            <a-input v-model="info.express_mobile" allowClear :maxLength='20'></a-input>
           </div>
         </div>
 
@@ -39,8 +51,9 @@
       </div>
 
       <div class="computed-row">
-        <div class="total">总共配置费用：<span class='unit orange-mark'>¥</span><span class='number orange-mark'>568000</span></div>
-        <a-button type='primary'>立即购买</a-button>
+        <div class="total">总共配置费用：<span class='unit orange-mark'>¥</span><span
+            class='number orange-mark'>{{ totalFee }}</span></div>
+        <a-button type='primary' @click='submit'>立即购买</a-button>
       </div>
     </div>
     <Footer></Footer>
@@ -50,43 +63,87 @@
 <script>
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
+import { getSelectedProduct, addOrder } from '../api/index'
 
+const DefaultProduct = [{
+  type: {
+    product_type_name: '技术服务费'
+  },
+  rate: '20%/年'
+}]
 export default {
- components: {
+  components: {
     Header,
     Footer,
   },
   data() {
     return {
+      ids: undefined,
       amount: 1,
-      productList: [{
-        name: '分布式存储服务器',
-        model: 'STC036（4U 36盘位 576T）',
-        price: '单价：288000元/台',
-        amount: '数量：1台',
-        total: '288800'
-      }, {
-        name: '分布式存储服务器',
-        model: 'STC036（4U 36盘位 576T）',
-        price: '单价：288000元/台',
-        amount: '数量：1台',
-        total: '288800'
-      }, {
-        name: '分布式存储服务器',
-        model: 'STC036（4U 36盘位 576T）',
-        price: '单价：288000元/台',
-        amount: '数量：1台',
-        total: '288800'
-      }, {
-        name: '分布式存储服务器',
-        model: 'STC036（4U 36盘位 576T）',
-        price: '单价：288000元/台',
-        amount: '数量：1台',
-        total: '288800'
-      }]
+      productList: [],
+      info: {
+        express_name: undefined,
+        express_mobile: undefined
+      }
     }
   },
+  computed: {
+    totalFee() {
+      let fee = 0
+      this.productList.forEach(item => {
+        if (item.price) {
+          fee += item.price * this.amount
+        }
+      })
+      return fee
+    }
+  },
+  watch: {
+    amount(val) {
+      console.log(val, !(/^[0-9]+$/.test(val)))
+      if (!(/^[0-9]+$/.test(val))) {
+        this.amount = val.slice(0, -1)
+      }
+    }
+  },
+  created() {
+    const ids = this.$route.query.ids
+    if (!ids) {
+      this.$message.error('请先选择要购买的产品！')
+      this.$router.push('/production')
+      return
+    }
+    this.ids = ids
+    this.render()
+  },
   methods: {
+    render() {
+      getSelectedProduct({ ids: this.ids }).then(res => {
+        this.productList = (res.data || []).concat(DefaultProduct)
+      })
+    },
+    submit() {
+      if (!this.amount) {
+        this.$message.error('请输入购买的集群数量！')
+        return
+      }
+      if (!this.info.express_name || !this.info.express_mobile) {
+        this.$message.error('请输入收货人信息！')
+        return
+      }
+      if (!(/^1[3456789]\d{9}$/.test(this.info.express_mobile))) {
+        this.$message.error('手机号不合法！')
+        return
+      }
+      addOrder({
+        ids: this.ids,
+        num: this.amount,
+        ...this.info
+      }).then(res => {
+        this.$message.success('购买成功！')
+        this.$router.push('/production')
+      })
+    },
     handleReduce() {
       if (this.amount - 1 > 0) {
         this.amount -= 1
@@ -132,6 +189,12 @@ export default {
     .total-price{
       font-size: 16px;
       font-weight: 500;
+    }
+    .cube{
+      flex:1;
+    }
+    .flex-75{
+      flex:0.6;
     }
   }
 }
