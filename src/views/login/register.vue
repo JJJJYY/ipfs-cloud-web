@@ -21,8 +21,13 @@
           <BaseForm ref='EmailForm' :formSetting='EmailFormSetting'></BaseForm>
         </div>
 
-        <div class="agree-hint">{{$t('message.__WYYDBTY__')}} <span
-            class='orange-mark pointer'>{{$t('message.__YHXY__')}}</span></div>
+        <div class="agree-hint">
+          <img v-show='!isAgree' class='pointer checkbox-icon' src="@/assets/image/checkbox.png"
+            alt="" @click='isAgree=true'>
+          <img v-show='isAgree' class='pointer checkbox-icon' src="@/assets/image/checkbox-fill.png"
+            alt="" @click='isAgree=false'>{{$t('message.__WYYDBTY__')}} <span
+            class='orange-mark pointer'>{{$t('message.__YHXY__')}}</span>
+        </div>
 
         <a-button type='primary' @click='register'>{{$t('message.__LJZC__')}}</a-button>
       </div>
@@ -46,10 +51,15 @@ export default {
       type: 1,
       PhoneFormSetting,
       EmailFormSetting,
+      isAgree: false
     }
   },
   methods: {
     register() {
+      if (!this.isAgree) {
+        this.$message.error('请先阅读用户协议并同意！')
+        return
+      }
       if (this.type === 1) {
         this.$refs.PhoneForm.valid((err, value) => {
           if (err) {
@@ -94,6 +104,7 @@ const PhoneFormSetting = [{
   label: 'message.__YZM__',
   key: 'code',
   type: 'code',
+  relationType: 'phone',
   relationKey: 'phone',
   relationLabel: 'message.__SJH__',
   placeholder: 'message.__QSRYZM__'
@@ -119,6 +130,7 @@ const EmailFormSetting = [{
   label: 'message.__YZM__',
   key: 'code',
   type: 'code',
+  relationType: 'email',
   relationKey: 'email',
   relationLabel: 'message.__YX__',
   placeholder: 'message.__QSRYZM__'
@@ -146,7 +158,14 @@ const EmailFormSetting = [{
   }
 }
 .agree-hint{
+  margin-top: 19px;
   margin-left:100px;
+  line-height: 16px;
+  .checkbox-icon{
+    width:14px;
+    height: 14px;
+    margin-right: 11px;
+  }
 }
 .ant-btn-primary{
   width:384px;

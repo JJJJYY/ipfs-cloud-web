@@ -37,6 +37,24 @@ export function registerPhone(params) {
   })
 }
 
+//  发送短信验证码
+export function sendPhoneCode(params) {
+  return request({
+    url: '/user/send_phone',
+    method: 'post',
+    data: params
+  })
+}
+
+//   发送邮箱验证码
+export function sendEmailCode(params) {
+  return request({
+    url: '/user/send_email',
+    method: 'post',
+    data: params
+  })
+}
+
 //  注册_邮箱
 export function registerEmail(params) {
   return request({
@@ -50,6 +68,24 @@ export function registerEmail(params) {
 export function modifyPassword(params) {
   return request({
     url: '/user/modifyPassword',
+    method: 'post',
+    data: params
+  })
+}
+
+//  修改电话
+export function modifyPhone(params) {
+  return request({
+    url: '/user/modifyPhone',
+    method: 'post',
+    data: params
+  })
+}
+
+//  修改邮箱
+export function modifyEmail(params) {
+  return request({
+    url: '/user/modifyEmail',
     method: 'post',
     data: params
   })

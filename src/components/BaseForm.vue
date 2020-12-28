@@ -9,8 +9,10 @@
         <div v-if="item.type==='code'" class='code-input ant-input-46'>
           <a-input v-model="form[item.key]" :placeholder="$t(item.placeholder)" :maxLength='6'>
           </a-input>
-          <span class='orange-mark pointer get-code-btn'
+          <span v-show='!isCountDown' class='orange-mark pointer get-code-btn'
             @click='getCode(item)'>{{$t('message.__HQYZM__')}}</span>
+          <span v-show='isCountDown'
+            class='orange-mark pointer get-code-btn disable'>{{second}}s后重新获取</span>
         </div>
 
         <!-- 手机号 -->
@@ -38,6 +40,9 @@
 </template>
 
 <script>
+import { sendPhoneCode, sendEmailCode } from '../api'
+
+const DefaultSecond = 59
 export default {
   props: {
     formSetting: {
@@ -48,7 +53,10 @@ export default {
   data() {
     return {
       errorHint: {},
-      form: {}
+      form: {},
+      second: DefaultSecond,
+      isCountDown: false,
+      timer: undefined
     };
   },
   created() {
@@ -79,13 +87,38 @@ export default {
       callback(null, { ...this.form })
     },
     getCode(item) {
-      if (!this.form[item.relationKey]) {
-        this.$message.error('请输入' + this.$t(item.relationLabel))
+      const value = this.form[item.relationKey]
+      const type = item.relationType
+
+      if (this.check(item, value, type)) {
+        this.$message.error('请输入正确的' + this.$t(item.relationLabel))
+        return
+      }
+      this.countDown()
+
+      if (type === 'phone') {
+        sendPhoneCode({
+          phone: value
+        }).then(res => {
+          this.$message.success('验证码已发送 ~')
+        }).catch(err => {
+          this.$message.error(err || '发送失败，请稍后再试！')
+          this.clearCountDown()
+        })
+      } else if (type === 'email') {
+        sendEmailCode({
+          email: value
+        }).then(res => {
+          this.$message.success('验证码已发送 ~')
+        }).catch(err => {
+          this.$message.error(err || '发送失败，请稍后再试！')
+          this.clearCountDown()
+        })
       }
     },
-    check(item) {
-      const value = this.form[item.key] || ''
-      const type = item.type
+    check(item, defV, defType) {
+      const value = defV || this.form[item.key] || ''
+      const type = defType || item.type
       if (item.noCheck && !value) {
         return '请输入' + this.$t(item.label)
       } else if (type === 'phone') {
@@ -112,7 +145,27 @@ export default {
       } else if (!value) {
         return '请输入' + this.$t(item.label)
       }
-    }
+    },
+    // 倒计时
+    countDown() {
+      this.second = DefaultSecond
+      this.isCountDown = true
+      this.countDownHandler()
+    },
+    countDownHandler() {
+      this.timer = setTimeout(() => {
+        this.second--
+        if (this.second === 0) {
+          this.isCountDown = false
+          clearTimeout(this.timer)
+        }
+        this.countDownHandler()
+      }, 1000);
+    },
+    clearCountDown() {
+      clearTimeout(this.timer)
+      this.isCountDown = false
+    },
   }
 }
 </script>
@@ -148,6 +201,11 @@ export default {
     transform: translateY(-50%);
     font-size: 16px;
     line-height: 16px;
+    pointer-events: auto;
+    &.disable{
+      opacity: 0.6;
+      pointer-events: none;
+    }
   }
 }
 .phont-input{
@@ -164,7 +222,7 @@ export default {
   }
   .down-icon{
     color:#999999;
-    margin-left:6px;
+    margin-left:2px;
   }
   .ant-input-affix-wrapper{
     flex:1;

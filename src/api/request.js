@@ -30,12 +30,12 @@ service.interceptors.request.use(
 service.interceptors.response.use(response => {
   const data = response.data || {}
 
-  if (data.code == 403) {  // eslint-disable-line
+  if (Number(data.code) === 403) {
+    localStorage.removeItem('token')
     return Promise.reject(new Error('请先登录！').message)
-  } else if (data.code != 200) { // eslint-disable-line
+  } else if (Number(data.code) !== 200) { // eslint-disable-line
     return Promise.reject(data.msg)
   }
-  console.log(response.data)
   return response.data || {}
 }, error => {
   return Promise.reject(error.message || '')

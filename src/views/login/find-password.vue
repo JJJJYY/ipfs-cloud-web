@@ -82,6 +82,9 @@ const FormSetting = [{
 </script>
 
 <style lang="less" scoped>
+.panel-title{
+  margin-left: 100px;
+}
 .tabs{
   display: flex;
   justify-content: center;

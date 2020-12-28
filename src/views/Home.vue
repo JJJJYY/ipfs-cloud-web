@@ -48,7 +48,8 @@
       <div class="row-2 panel-row">
         <div class="panel panel-3">
           <div class="panel-title">FilPool矿池</div>
-          <div class="panel-info">为IPFS深度定制Linux内核及分布式文件系统IPFS硬件全方位智能管家，稳定、强劲、高效，分布式存储&边缘计算，均可轻松胜任.
+          <div class="panel-info">专业 Filecoin 矿池，采用时空云科技 IPFS 深度定制的“蜘蛛服务器”及分布式存储“MineOS”
+            系统，高效稳定，安全有保障
           </div>
         </div>
         <div class="panel panel-4">

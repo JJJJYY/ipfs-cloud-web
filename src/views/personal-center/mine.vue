@@ -88,7 +88,8 @@ export default {
   }
   .user-info-cube{
     width:184px;
-    padding:34px 0 26px;
+    padding:34px 12px 26px;
+    box-sizing: border-box;
     text-align: center;
     .ant-avatar{
       margin-bottom:8px;
@@ -104,7 +105,9 @@ export default {
     .phone{
       font-size: 16px;
       line-height: 14px;
-      margin:27px 0 19px;
+      margin:27px 0 15px;
+      line-height: 20px;
+      word-break: break-all;
     }
     .uid{
       font-size: 16px;
