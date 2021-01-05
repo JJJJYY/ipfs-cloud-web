@@ -4,16 +4,12 @@
 
     <div class="banner">
       <div class="title">资讯</div>
-      <div class="subtitle">公告、新闻、帮助中心</div>
+      <div class="subtitle">公告、帮助中心</div>
     </div>
     <div class='tabs'>
       <div :class="['tab',activeTab==='notice'?'active':'']" @click="changeTab('notice')">
         <div class="title">公告</div>
         <div class="subtitle">最新信息公告</div>
-      </div>
-      <div :class="['tab',activeTab==='news'?'active':'']" @click="changeTab('news')">
-        <div class="title">新闻</div>
-        <div class="subtitle">最新资讯</div>
       </div>
       <div :class="['tab',activeTab==='help'?'active':'']" @click="changeTab('help')">
         <div class="title">帮助</div>
@@ -21,16 +17,7 @@
       </div>
     </div>
 
-    <!-- 公告 -->
-    <NoticeList v-show="activeTab==='notice' && !showDetail" type='notice' @viewDetail='handleViewDetail'></NoticeList>
-
-    <!-- 资讯 -->
-    <NewsList v-show="activeTab==='news' && !showDetail"  @viewDetail='handleViewDetail'></NewsList>
-
-    <!-- 帮助 -->
-    <NoticeList v-show="activeTab==='help' && !showDetail"  type='help' @viewDetail='handleViewDetail'></NoticeList>
-
-    <Detail v-show="showDetail" ref='DetailPanel' @goBack='showDetail=false'></Detail>
+    <router-view></router-view>
 
     <Footer></Footer>
   </div>
@@ -39,44 +26,45 @@
 <script>
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
-import NoticeList from '../components/Information/list'
-import NewsList from '../components/Information/listWithImg'
-import Detail from '../components/Information/Detail'
 
 export default {
- components: {
+  components: {
     Header,
     Footer,
-    NoticeList,
-    NewsList,
-    Detail
   },
   data() {
     return {
-      showDetail: false,
       activeTab: 'notice',
-      labelMap: {
-        notice: '信息公告',
-        news: '最新资讯',
-        help: '帮助中心',
-      },
     }
   },
-  created() {
-    const tab = this.$route.query.tab
-    if (this.labelMap[tab]) {
-      this.activeTab = tab
-    }
+  beforeRouteUpdate(to, from, next) {
+    this.setTab(to)
+    next()
+  },
+  mounted() {
+    this.setTab(this.$route)
+    document.getElementById('app').scrollTop = 0
   },
   methods: {
-    changeTab(tab) {
-      this.showDetail = false
-      this.activeTab = tab
+    // 高亮 tab
+    setTab(route) {
+      const path = route.path
+      if (/^\/information\//.test(path)) {
+        this.activeTab = path.replace('/information/', '')
+      }
+      if (path === '/information/detail') {
+        this.activeTab = route.query.type || 'notice'
+      }
     },
-    handleViewDetail(id) {
-      this.showDetail = true
-      this.$refs.DetailPanel.render(id, this.labelMap[this.activeTab])
-    }
+    // 点击切换 tab
+    changeTab(tab) {
+      this.activeTab = tab
+      const path = '/information/' + tab
+      if (path === this.$route.path) {
+        return
+      }
+      this.$router.push('/information/' + tab)
+    },
   }
 }
 </script>

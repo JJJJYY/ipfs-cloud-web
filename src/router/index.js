@@ -96,6 +96,32 @@ const routes = [
     path: '/information',
     name: 'information',
     component: () => import('../views/information'),
+    redirect: { name: 'notice' },
+    children: [{
+      path: 'notice',
+      name: 'notice',
+      component: () =>
+        import('../views/information/notice.vue'),
+      meta: {
+        isAuth: false
+      }
+    }, {
+      path: 'help',
+      name: 'help',
+      component: () =>
+        import('../views/information/help.vue'),
+      meta: {
+        isAuth: false
+      }
+    }, {
+      path: 'detail',
+      name: 'detail',
+      component: () =>
+        import('../views/information/detail.vue'),
+      meta: {
+        isAuth: false
+      }
+    }],
     meta: {
       isAuth: false
     }

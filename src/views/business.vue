@@ -1,11 +1,13 @@
 <template>
-  <div class='business-page'>
+  <div class='business-page' ref='businessPage'>
     <Header name='business'></Header>
 
     <div class="banner">商 务 合 作</div>
     <div class="content-area">
       <div class='h1'>合作介绍</div>
-      <p class='p'>全球领先的矿机分时共享服务平台，具有一流的矿机供应、最优的套餐费用、矿池直接打款、服务周期灵活等优势。极大简化挖矿繁琐流程,省去购买、安装、运营矿机等过程。帮助用户迅速开始挖矿。致力于为全球用户提供更高效、便捷的矿机共享服务。上线以来，快速收获了全球用户喜爱和认可，用户数不断攀升的同时，更积累了高消费能力的用户群体，迅速达到行业领先地位。</p>
+      <p class='p'>
+        全球领先的矿机分时共享服务平台，具有一流的矿机供应、最优的套餐费用、矿池直接打款、服务周期灵活等优势。极大简化挖矿繁琐流程,省去购买、安装、运营矿机等过程。帮助用户迅速开始挖矿。致力于为全球用户提供更高效、便捷的矿机共享服务。上线以来，快速收获了全球用户喜爱和认可，用户数不断攀升的同时，更积累了高消费能力的用户群体，迅速达到行业领先地位。
+      </p>
 
       <div class="h1">合作方式</div>
       <div class="h2">一、渠道推广合作</div>
@@ -22,8 +24,8 @@
       <div class="h3">2、分享推广</div>
       <div class="h4">合作方式:</div>
       <p>以CPS广告导流为主，渠道合作伙伴提供广告位，向IPFSCloud官网 或活动页导流。</p>
-      <p>线上代理:  销售代理在自己的站点售卖IPFSCloud的产品，IPFSCloud将 提供强大的技术支持服务，帮助代理商快速搭建分销站，轻松获得分销回报。</p>
-      <p>线下代理:  销售代理直接售卖IPFSCloud官网的商品，直接获得分销回报。</p>
+      <p>线上代理: 销售代理在自己的站点售卖IPFSCloud的产品，IPFSCloud将 提供强大的技术支持服务，帮助代理商快速搭建分销站，轻松获得分销回报。</p>
+      <p>线下代理: 销售代理直接售卖IPFSCloud官网的商品，直接获得分销回报。</p>
       <p>销售代理直接售卖IPFSCloud官网的商品，直接获得分销回报。</p>
 
       <div class="h3">3、新客注册下单</div>
@@ -47,10 +49,13 @@ import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 
 export default {
- components: {
+  components: {
     Header,
     Footer,
   },
+  mounted() {
+    document.getElementById('app').scrollTop = 0
+  }
 }
 </script>
 

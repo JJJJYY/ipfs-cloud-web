@@ -34,6 +34,22 @@ export function formatTime(time) {
     (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec : sec)
 }
 
+// 规范日期格式
+export function formatDate(time) {
+  let date
+  if (!time) {
+    date = new Date()
+  } else {
+    date = new Date(time)
+  }
+
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+
+  return year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day)
+}
+
 // 发请求去掉空值
 export function exchangeEmpty(obj, flag, emptyValue) {
   if (!obj || !(obj instanceof Object)) {

@@ -11,7 +11,9 @@ import {
     Checkbox,
     Modal,
     ConfigProvider,
-    Pagination
+    Pagination,
+    Empty,
+    Carousel
 } from 'ant-design-vue';
 Vue.prototype.$message = message;
 
@@ -26,3 +28,5 @@ Vue.use(Checkbox)
 Vue.use(Modal)
 Vue.use(ConfigProvider)
 Vue.use(Pagination)
+Vue.use(Empty)
+Vue.use(Carousel)

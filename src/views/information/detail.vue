@@ -1,5 +1,5 @@
 <template>
-<!-- 资讯详情 -->
+  <!-- 资讯详情 -->
   <div class='information-detail'>
     <div class="breadcrumb" @click='goBack'>
       <a-icon type="left" />返回<span class='split-line'></span>{{higherLevel}}
@@ -7,43 +7,65 @@
 
     <div class="article-content">
       <div class="title">{{data.title}}</div>
-      <div class="time">{{data.time}}</div>
-      <div class="content">{{data.content}}</div>
+      <div class="time">{{data.created_at}}</div>
+      <div class="content" v-html='data.content'></div>
 
       <div class='last-article pagination'>
         <span class='label'>上一篇：</span>
-        {{data.last}}</div>
+        {{data.last}}
+      </div>
       <div class='next-article pagination'>
         <span class='label'>下一篇：</span>
-        {{data.next}}</div>
+        {{data.next}}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  props: {
+import { getAnnounceDetail, getHelpDetail } from '../../api'
 
-  },
+export default {
   data() {
     return {
       higherLevel: undefined,
-      data: {
-        title: '他股市损失30万 合约交易却从未爆仓',
-        time: '2020-02-23  20:09:09',
-        content: `对于大部分虚拟货币市场的参与者来说，应该都是受2017年比特币牛市影响而入场的。但是今天我们认识的这位老韭菜---虎牙哥，却在2014年，比特币只有4000元人民币时，就接触到了比特币，但当时身处A股牛市，并且认为比特币是骗局，没有参与其中。几年后，不仅错过了币圈最大一轮的牛市红利，自己在股市的投资基本上也血本无归……
-                  2020年初，虎牙哥涉足数字货币领域，经历了一年的摸爬滚打，不仅实现了小额盈利，他还总结了一些经验和小窍门，希望分享给大家，帮助大家在今后的投资中有所收获。`,
-        last: '对于大部分虚拟货币市场的参与者来说',
-        next: '对于大部分虚拟货币市场的参与者来说'
-      }
+      data: {},
+      labelMap: {
+        notice: '信息公告',
+        help: '帮助中心',
+      },
     }
   },
+  created() {
+    const { type, id } = this.$route.query
+    if (!id || !type) {
+      this.goBack()
+      return
+    }
+    this.render(id, type)
+  },
   methods: {
-    render(id, label) {
-      this.higherLevel = label
+    render(id, type) {
+      this.higherLevel = this.labelMap[type]
+
+      if (type === 'help') {
+        getHelpDetail({ id }).then(res => {
+          this.data = (res || {}).data || {}
+        }).catch(err => {
+          this.$message.error(err || '网络错误，请稍后再试！')
+          this.goBack()
+        })
+      } else {
+        getAnnounceDetail({ id }).then(res => {
+          this.data = (res || {}).data || {}
+        }).catch(err => {
+          this.$message.error(err || '网络错误，请稍后再试！')
+          this.goBack()
+        })
+      }
     },
     goBack() {
-      this.$emit('goBack')
+      this.$router.go(-1)
     }
   }
 }

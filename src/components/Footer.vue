@@ -9,40 +9,53 @@
 
         <div class="list-1 list">
           <div class="list-title">产品</div>
-          <div class="list-item">seal</div>
-          <div class="list-item">zk</div>
-          <div class="list-item">存储</div>
-          <div class="list-item">技术服务</div>
+
+          <div class="list-item" v-for='(item,i) in productList' :key="i"
+            @click="$goto('/production')">{{item.product_type_name}}
+          </div>
         </div>
 
         <div class="list-2 list">
           <div class="list-title">信息</div>
-          <div class="list-item">关于我们</div>
-          <div class="list-item">公告</div>
-          <div class="list-item">资讯</div>
-          <div class="list-item">帮助中心</div>
+          <div class="list-item" @click="$goto('/information')">公告</div>
+          <div class="list-item" @click="$goto('/information/help')">帮助中心</div>
+          <div class="list-item" @click="$goto('/business')">商务合作</div>
         </div>
 
         <div class="qrcode-area">
           <div class="qrcode-1">
-            <img src=""  class='img' alt="">
+            <img src="" class='img' alt="">
             <div>客服微信</div>
           </div>
           <div class="qrcode-2">
-            <img src=""  class='img' alt="">
+            <img src="" class='img' alt="">
             <div>微信公众号</div>
           </div>
         </div>
 
       </div>
 
-      <div class="copyright">Copyright<a-icon class='copyright-icon' type="copyright" />2020 IPFS Cloud 深圳储算科技有限公司</div>
+      <div class="copyright">Copyright
+        <a-icon class='copyright-icon' type="copyright" />2020 IPFS Cloud 深圳储算科技有限公司
+      </div>
     </div>
   </footer>
 </template>
 
 <script>
+import { getProductType } from '../api'
+
 export default {
+  data() {
+    return {
+      productList: []
+    }
+  },
+  created() {
+    getProductType().then(res => {
+      this.productList = (res && res.data) || []
+    })
+  }
 
 }
 </script>
@@ -57,9 +70,10 @@ export default {
   }
   .row{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     .logo-area{
+      margin-top:24px;
       font-size: 16px;
       font-family: Source Han Sans CN;
       color:#fff;
@@ -85,7 +99,7 @@ export default {
         cursor: pointer;
       }
       .list-item + .list-item{
-        margin-top: 25px;
+        margin-top: 23px;
       }
     }
     .qrcode-area{

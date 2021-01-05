@@ -6,17 +6,20 @@
       <div class="content-hint">
         {{$t('message.__WXTSYRHWTHYLXKFLXDH__')}}
         <span class='orange-mark pointer'
-          @click="$goto('/information?tab=help')">{{$t('message.__BZZX__')}}</span>
+          @click="$goto('/information/help')">{{$t('message.__BZZX__')}}</span>
       </div>
       <div class="panel">
         <template v-for='(item,index) in list'>
           <div class="product-row" :key='index'>
-            <ProductItem :data='item[0]' :activeId='activeId' :selectedIds='selectedIds'
-              @open='handleOpen(item[0],index)' @select='handleSelectProd(item[0])'></ProductItem>
-            <ProductItem :data='item[1]' :activeId='activeId' :selectedIds='selectedIds'
-              @open='handleOpen(item[1],index)' @select='handleSelectProd(item[1])'></ProductItem>
-            <ProductItem :data='item[2]' :activeId='activeId' :selectedIds='selectedIds'
-              @open='handleOpen(item[2],index)' @select='handleSelectProd(item[2])'></ProductItem>
+            <ProductItem v-if='item[0]' :data='item[0]' :activeId='activeId'
+              :selectedIds='selectedIds' @open='handleOpen(item[0],index)'
+              @select='handleSelectProd(item[0])'></ProductItem>
+            <ProductItem v-if='item[1]' :data='item[1]' :activeId='activeId'
+              :selectedIds='selectedIds' @open='handleOpen(item[1],index)'
+              @select='handleSelectProd(item[1])'></ProductItem>
+            <ProductItem v-if='item[2]' :data='item[2]' :activeId='activeId'
+              :selectedIds='selectedIds' @open='handleOpen(item[2],index)'
+              @select='handleSelectProd(item[2])'></ProductItem>
           </div>
           <div :class="['product-detail-panel',activePanelKey==='panel'+index?'active':'']"
             :key="'panel'+index">
@@ -79,6 +82,9 @@ export default {
   created() {
     this.render()
   },
+  mounted() {
+    document.getElementById('app').scrollTop = 0
+  },
   methods: {
     render() {
       getProductList().then(res => {
@@ -97,6 +103,9 @@ export default {
           renderList.push(arr)
           arr = []
         })
+        if (arr.length !== 0) {
+          renderList.push(arr)
+        }
         this.list = renderList
         this.allIds = allIds
       }).catch(err => {

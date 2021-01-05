@@ -3,6 +3,14 @@ import { stringify, exchangeEmpty } from '../lib/common'
 
 // 0已取消 1已下单 2 已完成
 
+// banner 列表
+export function getBannerList() {
+  return request({
+    url: '/banner/list',
+    method: 'post',
+  })
+}
+
 // 登录
 export function login(params) {
   return request({
@@ -99,6 +107,14 @@ export function getProductList() {
   })
 }
 
+// 获取产品_类型
+export function getProductType() {
+  return request({
+    url: '/product/type',
+    method: 'POST',
+  })
+}
+
 // 获取选择的产品列表
 export function getSelectedProduct(params) {
   const data = stringify(params)
@@ -141,6 +157,42 @@ export function getOrderDetail(params) {
   const data = stringify(params)
   return request({
     url: '/order/info?' + data,
+    method: 'GET',
+  })
+}
+
+// 公告列表
+export function getAnnounceList(params) {
+  const data = stringify(params)
+  return request({
+    url: '/announcement/list?' + data,
+    method: 'GET',
+  })
+}
+
+// 公告详情
+export function getAnnounceDetail(params) {
+  const data = stringify(params)
+  return request({
+    url: '/announcement/info?' + data,
+    method: 'GET',
+  })
+}
+
+// 帮助中心
+export function getHelpList(params) {
+  const data = stringify(params)
+  return request({
+    url: '/help/list?' + data,
+    method: 'GET',
+  })
+}
+
+// 帮助详情
+export function getHelpDetail(params) {
+  const data = stringify(params)
+  return request({
+    url: '/help/info?' + data,
     method: 'GET',
   })
 }

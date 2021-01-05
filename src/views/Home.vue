@@ -1,7 +1,11 @@
 <template>
   <div class='home-page'>
     <Header name='home'></Header>
-    <div class="banner">共 享 储 存 分 享 价 值</div>
+
+    <a-carousel autoplay>
+      <img v-for='(item,i) in bannerList' :key='i' :src="item.image" alt="">
+    </a-carousel>
+
     <div class="hint hint-1">短时间/获取有效存储算力</div>
     <div class="button">
       <span class='btn'>一键开启</span>
@@ -80,14 +84,29 @@
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 import ContactUs from '../components/ContactUs'
+import { getBannerList } from '../api'
 
 export default {
   components: {
     Header,
     Footer,
     ContactUs
+  },
+  created() {
+    this.setBannerList()
+  },
+  data() {
+    return {
+      bannerList: []
+    }
+  },
+  methods: {
+    setBannerList() {
+      getBannerList().then(res => {
+        this.bannerList = (res || {}).data || []
+      })
+    }
   }
-
 }
 </script>
 
@@ -95,13 +114,10 @@ export default {
 .home-page{
   color:#333;
 }
-.banner{
+.banner-area{
   width:100%;
   height: 580px;
   background-color: #000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color:#fff;
   font-size: 56px;
   font-family: Source Han Sans CN;
@@ -242,5 +258,11 @@ export default {
     line-height: 32px;
     text-align: center;
   }
+}
+</style>
+
+<style lang="less">
+.home-page .ant-carousel .slick-list{
+  max-height: 580px;
 }
 </style>

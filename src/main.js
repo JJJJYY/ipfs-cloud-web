@@ -7,11 +7,12 @@ import i18n from './i18n'
 import './lib/ant-design'
 import './assets/css/common.less'
 
-import { formatTime } from './lib/common'
+import { formatTime, formatDate } from './lib/common'
 
 Vue.config.productionTip = false
 
 Vue.prototype.$formatTime = formatTime
+Vue.prototype.$formatDate = formatDate
 Vue.prototype.$goto = function (path) {
   const cur = router && router.app && router.app.$route.path
   if (cur === path) {
