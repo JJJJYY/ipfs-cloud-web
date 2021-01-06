@@ -99,6 +99,23 @@ export function modifyEmail(params) {
   })
 }
 
+//  找回密码
+export function resetPassword(params) {
+  return request({
+    url: '/user/resetPassword',
+    method: 'post',
+    data: params
+  })
+}
+
+//  首页 合作伙伴
+export function getPartnerList() {
+  return request({
+    url: '/partner/list',
+    method: 'post',
+  })
+}
+
 // 获取产品列表
 export function getProductList() {
   return request({

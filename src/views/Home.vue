@@ -72,6 +72,9 @@
 
     <div class="area-4">
       <div class="area-title">合作伙伴</div>
+      <div class='area-content'>
+        <img v-for='(item,i) in partnerList' :key='i' :src="item.image" alt="">
+      </div>
     </div>
 
     <Footer></Footer>
@@ -84,7 +87,7 @@
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
 import ContactUs from '../components/ContactUs'
-import { getBannerList } from '../api'
+import { getBannerList, getPartnerList } from '../api'
 
 export default {
   components: {
@@ -94,16 +97,23 @@ export default {
   },
   created() {
     this.setBannerList()
+    this.setPartnerList()
   },
   data() {
     return {
-      bannerList: []
+      bannerList: [],
+      partnerList: []
     }
   },
   methods: {
     setBannerList() {
       getBannerList().then(res => {
         this.bannerList = (res || {}).data || []
+      })
+    },
+    setPartnerList() {
+      getPartnerList().then(res => {
+        this.partnerList = res.data || []
       })
     }
   }

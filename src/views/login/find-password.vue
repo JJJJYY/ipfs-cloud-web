@@ -2,6 +2,7 @@
   <!-- 找回密码 -->
   <div class='login-page'>
     <LoginHeader type='message.__WJMM__'></LoginHeader>
+
     <div class='account-content'>
       <div class="hint orange-mark pointer" @click="$goto('/register')">{{$t('message.__ZCZH__')}}
       </div>
@@ -20,9 +21,10 @@
 </template>
 
 <script>
+import md5 from 'md5'
 import LoginHeader from '../../components/LoginHeader'
 import BaseForm from '../../components/BaseForm'
-// import { modifyPassword } from '../../api'
+import { resetPassword } from '../../api'
 
 export default {
   components: {
@@ -41,14 +43,14 @@ export default {
           return
         }
         delete value.passwordCopy
-        // value.password = md5(value.password)
+        value.password = md5(value.password)
 
-        // modifyPassword(value).then(res => {
-        //   this.$message.success('修改成功，请登录！')
-        //   this.$router.push('/login')
-        // }).catch(err => {
-        //   this.$message.success(err || '操作失败，请稍后再试！')
-        // })
+        resetPassword(value).then(res => {
+          this.$message.success('修改成功，请重新登录！')
+          this.$router.push('/login')
+        }).catch(err => {
+          this.$message.success(err || '操作失败，请稍后再试！')
+        })
       })
     }
   }
@@ -63,8 +65,9 @@ const FormSetting = [{
   label: 'message.__YZM__',
   key: 'code',
   type: 'code',
+  relationType: 'phoneOrEmail',
   relationKey: 'account',
-  relationLabel: 'message.__ZH__',
+  relationLabel: '手机号或邮箱',
   placeholder: 'message.__QSRYZM__'
 }, {
   label: 'message.__SZMM__',

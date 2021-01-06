@@ -10,13 +10,15 @@
       <div class="time">{{data.created_at}}</div>
       <div class="content" v-html='data.content'></div>
 
-      <div class='last-article pagination'>
+      <div class='last-article pagination' v-if='next.pre_info'
+        @click="viewDetail(next.pre_info.id)">
         <span class='label'>上一篇：</span>
-        {{data.last}}
+        {{ next.pre_info.title }}
       </div>
-      <div class='next-article pagination'>
+      <div class='next-article pagination' v-if='next.next_info'
+        @click="viewDetail(next.next_info.id)">
         <span class='label'>下一篇：</span>
-        {{data.next}}
+        {{ next.next_info.title }}
       </div>
     </div>
   </div>
@@ -30,6 +32,8 @@ export default {
     return {
       higherLevel: undefined,
       data: {},
+      next: {},
+      type: undefined,
       labelMap: {
         notice: '信息公告',
         help: '帮助中心',
@@ -37,36 +41,49 @@ export default {
     }
   },
   created() {
-    const { type, id } = this.$route.query
-    if (!id || !type) {
-      this.goBack()
-      return
-    }
-    this.render(id, type)
+    this.refresh()
   },
   methods: {
-    render(id, type) {
+    refresh() {
+      const { type, id } = this.$route.query
+      if (!id || !type) {
+        this.goBack()
+        return
+      }
+      this.type = type
+      this.renderList(id, type)
+    },
+    renderList(id, type) {
       this.higherLevel = this.labelMap[type]
 
       if (type === 'help') {
         getHelpDetail({ id }).then(res => {
-          this.data = (res || {}).data || {}
+          const data = (res || {}).data || {}
+          this.data = data
+          this.next = data.next
         }).catch(err => {
           this.$message.error(err || '网络错误，请稍后再试！')
           this.goBack()
         })
       } else {
         getAnnounceDetail({ id }).then(res => {
-          this.data = (res || {}).data || {}
+          const data = (res || {}).data || {}
+          this.data = data
+          this.next = data.next
         }).catch(err => {
           this.$message.error(err || '网络错误，请稍后再试！')
           this.goBack()
         })
       }
     },
+    viewDetail(id) {
+      const path = '/information/detail?type=' + this.type + '&id=' + id
+      this.$router.push(path)
+      this.refresh()
+    },
     goBack() {
       this.$router.go(-1)
-    }
+    },
   }
 }
 </script>
@@ -99,6 +116,7 @@ export default {
   >.title{
     font-size: 20px;
     font-weight: 500;
+    word-break: break-all;
   }
   >.time{
     font-size: 16px;
@@ -109,6 +127,7 @@ export default {
     font-size: 16px;
     line-height: 24px;
     min-height: 500px;
+    word-break: break-all;
   }
 }
 .pagination{
@@ -116,12 +135,12 @@ export default {
   line-height: 21px;
   color:#666666;
   cursor: pointer;
-  &.last-article{
-    margin-bottom:22px;
-  }
   >.label{
     color:#333;
   }
+}
+.pagination + .pagination{
+  margin-top:22px;
 }
 
 </style>

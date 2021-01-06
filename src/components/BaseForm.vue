@@ -97,23 +97,15 @@ export default {
       this.countDown()
 
       if (type === 'phone') {
-        sendPhoneCode({
-          phone: value
-        }).then(res => {
-          this.$message.success('验证码已发送 ~')
-        }).catch(err => {
-          this.$message.error(err || '发送失败，请稍后再试！')
-          this.clearCountDown()
-        })
+        this.sendPhoneCode(value)
       } else if (type === 'email') {
-        sendEmailCode({
-          email: value
-        }).then(res => {
-          this.$message.success('验证码已发送 ~')
-        }).catch(err => {
-          this.$message.error(err || '发送失败，请稍后再试！')
-          this.clearCountDown()
-        })
+        this.sendEmailCode(value)
+      } else if (type === 'phoneOrEmail') {
+        if (/^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(value)) {
+          this.sendEmailCode(value)
+        } else if (/^1[3456789]\d{9}$/.test(value)) {
+          this.sendPhoneCode(value)
+        }
       }
     },
     check(item, defV, defType) {
@@ -131,6 +123,12 @@ export default {
         if (!res) {
           return '请输入正确格式的邮箱'
         }
+      } else if (type === 'phoneOrEmail') {
+        const resEmail = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(value)
+        const resPhone = /^1[3456789]\d{9}$/.test(value)
+        if (!resEmail && !resPhone) {
+          return '请输入正确格式的手机号或邮箱'
+        }
       } else if (type === 'password') {
         const res = /^[0-9a-zA-Z]{8,20}$/.test(value)
         if (!res) {
@@ -145,6 +143,26 @@ export default {
       } else if (!value) {
         return '请输入' + this.$t(item.label)
       }
+    },
+    sendEmailCode(value) {
+      sendEmailCode({
+        email: value
+      }).then(res => {
+        this.$message.success('验证码已发送 ~')
+      }).catch(err => {
+        this.$message.error(err || '发送失败，请稍后再试！')
+        this.clearCountDown()
+      })
+    },
+    sendPhoneCode(value) {
+      sendPhoneCode({
+        phone: value
+      }).then(res => {
+        this.$message.success('验证码已发送 ~')
+      }).catch(err => {
+        this.$message.error(err || '发送失败，请稍后再试！')
+        this.clearCountDown()
+      })
     },
     // 倒计时
     countDown() {

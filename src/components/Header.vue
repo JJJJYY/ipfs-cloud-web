@@ -140,10 +140,10 @@ export default {
     margin-left: 9px;
   }
   .select-panel{
+    z-index:100;
     display: none;
     position: absolute;
     width:100%;
-    // margin-top:10px;
     background-color: #fff;
     border-radius: 4px;
     font-size: 16px;
