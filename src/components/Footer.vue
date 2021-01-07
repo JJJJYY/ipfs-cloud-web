@@ -43,18 +43,22 @@
 </template>
 
 <script>
-import { getProductType } from '../api'
-
 export default {
+  name: 'Footer',
   data() {
     return {
-      productList: []
+    }
+  },
+  computed: {
+    productList() {
+      return this.$store.state.productList
     }
   },
   created() {
-    getProductType().then(res => {
-      this.productList = (res && res.data) || []
-    })
+    const list = this.$store.state.productList
+    if (!list || list.length === 0) {
+      this.$store.dispatch('setProductList')
+    }
   }
 
 }

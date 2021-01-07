@@ -27,6 +27,7 @@ import BaseForm from '../../components/BaseForm'
 import { resetPassword } from '../../api'
 
 export default {
+  name: 'find-password',
   components: {
     LoginHeader,
     BaseForm

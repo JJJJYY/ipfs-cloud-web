@@ -13,9 +13,11 @@ import {
     ConfigProvider,
     Pagination,
     Empty,
-    Carousel
+    Carousel,
 } from 'ant-design-vue';
+
 Vue.prototype.$message = message;
+Vue.prototype.$confirm = Modal.confirm;
 
 Vue.use(Button)
 Vue.use(Icon)

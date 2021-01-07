@@ -55,6 +55,7 @@ import { getOrderList, cancelOrder } from '../../api/index'
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
 
 export default {
+  name: 'mine-order',
   data() {
     return {
       locale: zhCN,
@@ -93,14 +94,22 @@ export default {
       })
     },
     handleCancel(id) {
-      this.canceling.push(id)
-      cancelOrder({ id }).then(res => {
-        this.canceling.splice(this.canceling.indexOf(id), 1)
-        this.$message.success(res.msg || '订单取消成功！')
-        this.render()
-      }).catch(() => {
-        this.canceling.splice(this.canceling.indexOf(id), 1)
-      })
+      this.$confirm({
+        content: '确定取消该订单？',
+        okText: '确认',
+        cancelText: '取消',
+        centered: true,
+        onOk: () => {
+          this.canceling.push(id)
+          cancelOrder({ id }).then(res => {
+            this.canceling.splice(this.canceling.indexOf(id), 1)
+            this.$message.success(res.msg || '订单取消成功！')
+            this.render()
+          }).catch(() => {
+            this.canceling.splice(this.canceling.indexOf(id), 1)
+          })
+        },
+      });
     },
     onChangeDate(date, dateString) {
       this.filter.timeStart = dateString[0]

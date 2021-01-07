@@ -44,6 +44,7 @@ import { sendPhoneCode, sendEmailCode } from '../api'
 
 const DefaultSecond = 59
 export default {
+  name: 'BaseForm',
   props: {
     formSetting: {
       type: Array,

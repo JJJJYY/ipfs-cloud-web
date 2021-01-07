@@ -25,6 +25,7 @@ import BaseForm from './BaseForm'
 import { modifyPassword, modifyPhone, modifyEmail } from '../api'
 
 export default {
+  name: 'AccountSettingPopup',
   components: {
     BaseForm
   },

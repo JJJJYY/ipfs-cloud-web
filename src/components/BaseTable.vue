@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: 'BaseTable',
   props: {
     tableSetting: {
       type: Array,

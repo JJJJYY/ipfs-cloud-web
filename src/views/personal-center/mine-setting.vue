@@ -46,6 +46,7 @@
 import AccountSettingPopup from '../../components/AccountSettingPopup'
 
 export default {
+  name: 'mine-setting',
   components: {
     AccountSettingPopup
   },

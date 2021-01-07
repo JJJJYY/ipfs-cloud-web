@@ -26,6 +26,7 @@ import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
 import { getHelpList } from '../../api'
 
 export default {
+  name: 'help',
   data() {
     return {
       list: [],

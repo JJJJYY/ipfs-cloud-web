@@ -40,6 +40,7 @@
 import { logout } from '../api'
 
 export default {
+  name: 'Header',
   props: {
     name: {
       type: String,

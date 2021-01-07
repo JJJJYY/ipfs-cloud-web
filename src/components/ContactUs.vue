@@ -1,21 +1,21 @@
 <template>
-<!-- 主页固定 联系我们 -->
+  <!-- 主页固定 联系我们 -->
   <div class='contact-us'>
-      <div class="qrcode-panel">
-        <img src="" class='qrcode-img' alt="">
-        <div class='hint'>客服二维码</div>
-        <div class="phone">150 8652 2535</div>
-      </div>
-      <div class="fixed-cube">
-        <img src="@/assets/image/chat.png" class='chat-img' alt="">
-        联系我们
-      </div>
+    <div class="qrcode-panel">
+      <img src="" class='qrcode-img' alt="">
+      <div class='hint'>客服二维码</div>
+      <div class="phone">150 8652 2535</div>
+    </div>
+    <div class="fixed-cube">
+      <img src="@/assets/image/chat.png" class='chat-img' alt="">
+      联系我们
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  name: 'ContactUs'
 }
 </script>
 

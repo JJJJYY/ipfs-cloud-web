@@ -72,6 +72,7 @@ const DefaultProduct = [{
   rate: '20%/年'
 }]
 export default {
+  name: 'order-detail',
   components: {
     Header,
     Footer,
@@ -100,7 +101,6 @@ export default {
   },
   watch: {
     amount(val) {
-      console.log(val, !(/^[0-9]+$/.test(val)))
       if (!(/^[0-9]+$/.test(val))) {
         this.amount = val.slice(0, -1)
       }
@@ -141,7 +141,9 @@ export default {
         ...this.info
       }).then(res => {
         this.$message.success('购买成功！')
-        this.$router.push('/production')
+        this.$router.push('/mine/order')
+      }).catch(err => {
+        this.$message.error(err || '购买失败，请稍后再试！')
       })
     },
     handleReduce() {

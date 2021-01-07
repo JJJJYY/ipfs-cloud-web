@@ -33,7 +33,11 @@
         </div>
       </div>
       <div class="content-cube cube">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view v-if='$route.meta.keepAlive'></router-view>
+        </keep-alive>
+
+        <router-view v-if='!$route.meta.keepAlive'></router-view>
       </div>
     </div>
     <Footer></Footer>
@@ -45,6 +49,7 @@ import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
 
 export default {
+  name: 'mine',
   components: {
     Header,
     Footer,

@@ -28,6 +28,7 @@
 import { getAnnounceDetail, getHelpDetail } from '../../api'
 
 export default {
+  name: 'detail',
   data() {
     return {
       higherLevel: undefined,

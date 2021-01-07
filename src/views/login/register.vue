@@ -42,6 +42,7 @@ import BaseForm from '../../components/BaseForm'
 import { registerEmail, registerPhone } from '../../api/index'
 
 export default {
+  name: 'register',
   components: {
     LoginHeader,
     BaseForm

@@ -36,6 +36,7 @@
 
 <script>
 export default {
+  name: 'ProductItem',
   props: {
     data: {
       type: Object,

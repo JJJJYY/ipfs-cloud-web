@@ -27,6 +27,7 @@ import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
 import { getAnnounceList } from '../../api'
 
 export default {
+  name: 'notice',
   data() {
     return {
       list: [],

@@ -3,7 +3,7 @@
     <Header name='home'></Header>
 
     <a-carousel autoplay>
-      <img v-for='(item,i) in bannerList' :key='i' :src="item.image" alt="">
+      <img v-for='(item,i) in bannerList' :key='i' :src="item.image" alt="" @click='goto(item.url)'>
     </a-carousel>
 
     <div class="hint hint-1">短时间/获取有效存储算力</div>
@@ -73,7 +73,9 @@
     <div class="area-4">
       <div class="area-title">合作伙伴</div>
       <div class='area-content'>
-        <img v-for='(item,i) in partnerList' :key='i' :src="item.image" alt="">
+        <div class='img-wrapper' v-for='(item,i) in partnerList' :key='i'>
+          <img :src="item.image" class='partner-img' alt="" @click='goto(item.link)'>
+        </div>
       </div>
     </div>
 
@@ -90,6 +92,7 @@ import ContactUs from '../components/ContactUs'
 import { getBannerList, getPartnerList } from '../api'
 
 export default {
+  name: 'home',
   components: {
     Header,
     Footer,
@@ -113,8 +116,14 @@ export default {
     },
     setPartnerList() {
       getPartnerList().then(res => {
-        this.partnerList = res.data || []
+        this.partnerList = (res.data || []).sort((a, b) => a.rank - b.rank)
       })
+    },
+    goto(url) {
+      if (!url) {
+        return
+      }
+      window.open(url, '_blank')
     }
   }
 }
@@ -267,6 +276,23 @@ export default {
     font-weight: bold;
     line-height: 32px;
     text-align: center;
+  }
+  .area-content{
+    width:1200px;
+    margin:83px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    .img-wrapper{
+      flex:1;
+      text-align: center;
+    }
+    .partner-img{
+      width:204px;
+      height: 55px;
+      margin-bottom: 40px;
+    }
   }
 }
 </style>

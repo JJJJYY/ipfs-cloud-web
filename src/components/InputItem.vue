@@ -2,13 +2,16 @@
   <div class='input-item'>
     <div class="item-row">
       <div class='item-label'>{{ $t(label) }}</div>
-      <div class='code-input ant-input-46'  v-if="type==='code'" >
-        <a-input  :placeholder="$t(placeholder)" :maxLength='10'></a-input>
-        <span class='orange-mark pointer get-code-btn' @click='getCode'>{{$t('message.__HQYZM__')}}</span>
+      <div class='code-input ant-input-46' v-if="type==='code'">
+        <a-input :placeholder="$t(placeholder)" :maxLength='10'></a-input>
+        <span class='orange-mark pointer get-code-btn'
+          @click='getCode'>{{$t('message.__HQYZM__')}}</span>
       </div>
-      <div class='phont-input ant-input-46'  v-else-if="type==='phone'" >
-          <div class='phone-select'>86<a-icon type="caret-down" class='down-icon'/></div>
-          <a-input  class='ant-input-46' allowClear :placeholder="$t(placeholder)"></a-input>
+      <div class='phont-input ant-input-46' v-else-if="type==='phone'">
+        <div class='phone-select'>86
+          <a-icon type="caret-down" class='down-icon' />
+        </div>
+        <a-input class='ant-input-46' allowClear :placeholder="$t(placeholder)"></a-input>
       </div>
       <a-input v-else class='ant-input-46' allowClear :placeholder="$t(placeholder)"></a-input>
     </div>
@@ -18,6 +21,7 @@
 
 <script>
 export default {
+  name: 'InputItem',
   props: {
     type: {
       type: String,

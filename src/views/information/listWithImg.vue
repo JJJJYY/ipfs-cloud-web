@@ -20,6 +20,7 @@
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
 
 export default {
+  name: 'listWithImg',
   props: {
     type: {
       type: String,

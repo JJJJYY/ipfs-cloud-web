@@ -79,6 +79,7 @@ import Footer from '../../components/Footer.vue'
 import { getOrderDetail } from '../../api/index'
 
 export default {
+  name: 'mine-order-detail',
   components: {
     Header,
     Footer,
@@ -86,8 +87,8 @@ export default {
   data() {
     return {
       user: {
-        express_name: '雷锋',
-        express_mobile: '135 4561 1236'
+        express_name: undefined,
+        express_mobile: undefined
       },
       detail: {},
       id: undefined

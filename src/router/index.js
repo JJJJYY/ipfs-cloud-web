@@ -9,7 +9,8 @@ const routes = [
     name: 'Home',
     component: () => import('../views/home'),
     meta: {
-      isAuth: false
+      isAuth: false,
+      keepAlive: true
     }
   },
   {
@@ -17,7 +18,8 @@ const routes = [
     name: 'Production',
     component: () => import('../views/production'),
     meta: {
-      isAuth: false
+      isAuth: false,
+      keepAlive: false
     }
   },
   {
@@ -25,18 +27,17 @@ const routes = [
     name: 'Mine',
     component: () => import('../views/personal-center/mine'),
     redirect: { name: 'order' },
+    meta: {
+      keepAlive: false
+    },
     children: [
-      // {
-      //   path: 'assets',
-      //   name: 'assets',
-      //   component: () => import('../views/personal-center/mine-assets.vue')
-      // },
       {
         path: 'order',
         name: 'order',
         component: () => import('../views/personal-center/mine-order.vue'),
         meta: {
-          isAuth: true
+          isAuth: true,
+          keepAlive: false
         }
       },
       {
@@ -44,7 +45,8 @@ const routes = [
         name: 'setting',
         component: () => import('../views/personal-center/mine-setting.vue'),
         meta: {
-          isAuth: true
+          isAuth: true,
+          keepAlive: false
         }
       }
     ]
@@ -54,56 +56,67 @@ const routes = [
     name: 'mineOrderDetail',
     component: () => import('../views/personal-center/mine-order-detail.vue'),
     meta: {
-      isAuth: true
+      isAuth: true,
+      keepAlive: false
     }
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('../views/login/index'),
+    component: () => import('../views/login/login'),
     meta: {
-      isAuth: false
+      isAuth: false,
+      keepAlive: false
     }
   }, {
     path: '/register',
     name: 'register',
     component: () => import('../views/login/register'),
     meta: {
-      isAuth: false
+      isAuth: false,
+      keepAlive: false
     }
   }, {
     path: '/findPassword',
     name: 'findPassword',
     component: () => import('../views/login/find-password'),
     meta: {
-      isAuth: false
+      isAuth: false,
+      keepAlive: false
     }
   }, {
     path: '/orderDetail',
     name: 'orderDetail',
     component: () => import('../views/order-detail'),
     meta: {
-      isAuth: true
+      isAuth: true,
+      keepAlive: false
     }
   }, {
     path: '/business',
     name: 'business',
     component: () => import('../views/business'),
     meta: {
-      isAuth: false
+      isAuth: false,
+      keepAlive: true
     }
   }, {
     path: '/information',
     name: 'information',
     component: () => import('../views/information'),
     redirect: { name: 'notice' },
+    meta: {
+      isAuth: false,
+      keepAlive: true
+    },
     children: [{
       path: 'notice',
       name: 'notice',
       component: () =>
         import('../views/information/notice.vue'),
       meta: {
-        isAuth: false
+        isAuth: false,
+        keepAlive: true
       }
     }, {
       path: 'help',
@@ -111,7 +124,8 @@ const routes = [
       component: () =>
         import('../views/information/help.vue'),
       meta: {
-        isAuth: false
+        isAuth: false,
+        keepAlive: true
       }
     }, {
       path: 'detail',
@@ -119,12 +133,10 @@ const routes = [
       component: () =>
         import('../views/information/detail.vue'),
       meta: {
-        isAuth: false
+        isAuth: false,
+        keepAlive: false
       }
     }],
-    meta: {
-      isAuth: false
-    }
   },
 ];
 

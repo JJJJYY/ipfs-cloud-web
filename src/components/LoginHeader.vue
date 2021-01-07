@@ -1,8 +1,8 @@
 <template>
-<!-- 登录页面的header -->
+  <!-- 登录页面的header -->
   <div class='login-header'>
     <div class="header-content">
-      <img  @click="$goto('/')" src="@/assets/image/logo.png" class='logo pointer' alt="">
+      <img @click="$goto('/')" src="@/assets/image/logo.png" class='logo pointer' alt="">
       <span class='pointer' @click="$goto('/')">{{$t('message.__FBSCCYJCFWS__')}}</span>
       <span class='split-line'>|</span>
       <span class='type'>{{ $t(type) }}</span>
@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name: 'LoginHeader',
   props: {
     type: {
       type: String,

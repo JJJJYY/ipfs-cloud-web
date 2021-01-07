@@ -59,6 +59,7 @@ import ProductItem from '../components/ProductItem'
 import { getProductList } from '../api/index'
 
 export default {
+  name: 'production',
   components: {
     Header,
     Footer,

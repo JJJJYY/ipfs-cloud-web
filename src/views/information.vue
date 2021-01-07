@@ -7,23 +7,21 @@
       <div class="subtitle">公告、帮助中心</div>
     </div>
     <div class="tabs">
-      <div
-        :class="['tab', activeTab === 'notice' ? 'active' : '']"
-        @click="changeTab('notice')"
-      >
+      <div :class="['tab', activeTab === 'notice' ? 'active' : '']" @click="changeTab('notice')">
         <div class="title">公告</div>
         <div class="subtitle">最新信息公告</div>
       </div>
-      <div
-        :class="['tab', activeTab === 'help' ? 'active' : '']"
-        @click="changeTab('help')"
-      >
+      <div :class="['tab', activeTab === 'help' ? 'active' : '']" @click="changeTab('help')">
         <div class="title">帮助</div>
         <div class="subtitle">帮助中心</div>
       </div>
     </div>
 
-    <router-view></router-view>
+    <keep-alive>
+      <router-view v-if='$route.meta.keepAlive'></router-view>
+    </keep-alive>
+
+    <router-view v-if='!$route.meta.keepAlive'></router-view>
 
     <Footer></Footer>
   </div>
@@ -34,6 +32,7 @@ import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
 
 export default {
+  name: 'information',
   components: {
     Header,
     Footer
