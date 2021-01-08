@@ -91,7 +91,7 @@ export default {
 
 <style lang="less" scoped>
 .information-detail{
-  width:684px;
+  width:1200px;
   margin:32px auto 277px;
   color: #333333;
   .breadcrumb{

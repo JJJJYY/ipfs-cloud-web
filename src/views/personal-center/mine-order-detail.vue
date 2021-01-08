@@ -18,7 +18,10 @@
       <div class='order-info'>
         <div class="info-item">
           <span class="label">订单状态：</span>
-          <span class="value">{{ detail.status==0?'已取消':detail.status==1?'已下单':'已完成' }} </span>
+          <span
+            class="value">{{ detail.status==0?'已取消':detail.status==1?'已下单':detail.status == 2 ?'已完成':'' }}
+            {{detail.status}}
+          </span>
         </div>
         <div class="info-item">
           <span class="label">订单号：</span>

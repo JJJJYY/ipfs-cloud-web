@@ -29,7 +29,8 @@
           <span class='td'>{{ $formatTime(item.created_at) }}</span>
           <span class='td time'>{{ $formatTime(item.pay_time) }}</span>
           <span class='td amount'>{{ item.total_amount }}</span>
-          <span class='td flex-0-5'>{{ item.status==0?'已取消':item.status==1?'已下单':'已完成' }}</span>
+          <span
+            class='td flex-0-5'>{{ item.status==0?'已取消':item.status==1?'已下单':item.status==2?'已完成':'' }}</span>
           <div class='td'>
             <a-button type='link' @click="$goto('/mineOrderDetail?id='+item.id)">详情</a-button>
             <a-button type='link' v-if='item.status==1' @click='handleCancel(item.id)'
