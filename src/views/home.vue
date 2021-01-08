@@ -8,7 +8,7 @@
 
     <div class="hint hint-1">短时间/获取有效存储算力</div>
     <div class="button">
-      <span class='btn'>一键开启</span>
+      <span class='btn' @click="$goto('/production')">一键开启</span>
     </div>
     <div class="split-line"></div>
 

@@ -14,7 +14,8 @@
           <BaseForm ref='Form' :formSetting='FormSetting'></BaseForm>
         </div>
 
-        <a-button type='primary' @click='submit'>{{ $t('message.__CZMM__') }}</a-button>
+        <a-button type='primary' :loading='loading' @click='submit'>{{ $t('message.__CZMM__') }}
+        </a-button>
       </div>
     </div>
   </div>
@@ -34,7 +35,8 @@ export default {
   },
   data() {
     return {
-      FormSetting
+      FormSetting,
+      loading: false
     }
   },
   methods: {
@@ -46,10 +48,13 @@ export default {
         delete value.passwordCopy
         value.password = md5(value.password)
 
+        this.loading = true
         resetPassword(value).then(res => {
+          this.loading = true
           this.$message.success('修改成功，请重新登录！')
           this.$router.push('/login')
         }).catch(err => {
+          this.loading = true
           this.$message.success(err || '操作失败，请稍后再试！')
         })
       })

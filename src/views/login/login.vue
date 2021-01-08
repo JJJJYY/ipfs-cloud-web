@@ -8,11 +8,16 @@
       <div class='input-panel'>
         <div class="panel-title">{{$t('message.__DL__')}}</div>
         <div class="panel-content">
+
           <a-input v-model="username" :placeholder="$t('message.__SJHYXDZ__')" allowClear
             size='large' :maxLength='30'></a-input>
+
           <a-input-password v-model="password" class='input-2' :placeholder="$t('message.__SRMM__')"
-            allowClear size='large' :maxLength='30'></a-input-password>
-          <a-button type='primary' @click='login'>{{$t('message.__LJDL__')}}</a-button>
+            allowClear size='large' :maxLength='30' @pressEnter='login'></a-input-password>
+
+          <a-button type='primary' :loading='loading' @click='login'>{{$t('message.__LJDL__')}}
+          </a-button>
+
           <div class='login-hint'>
             <div>{{$t('message.__MYZH__')}}<span class='orange-mark pointer'
                 @click="$goto('/register')">{{$t('message.__ZC__')}}</span></div>
@@ -38,7 +43,8 @@ export default {
   data() {
     return {
       username: undefined,
-      password: undefined
+      password: undefined,
+      loading: false
     }
   },
   methods: {
@@ -47,10 +53,12 @@ export default {
         this.$message.error('请输入登录信息！')
         return
       }
+      this.loading = true
       login({
         username: this.username,
         password: md5(this.password)
       }).then(res => {
+        this.loading = false
         const data = res.data || {}
         if (data.token) {
           localStorage.setItem('token', 'Bearer ' + data.token)
@@ -59,6 +67,7 @@ export default {
         this.$message.success('登录成功！')
         this.$router.replace('/')
       }).catch(err => {
+        this.loading = false
         this.$message.error(err)
       })
     }

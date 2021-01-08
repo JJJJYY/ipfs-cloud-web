@@ -30,7 +30,8 @@
             @click="$goto('/userProtocol')">{{$t('message.__YHXY__')}}</span>
         </div>
 
-        <a-button type='primary' @click='register'>{{$t('message.__LJZC__')}}</a-button>
+        <a-button type='primary' :loading='loading' @click='register'>{{$t('message.__LJZC__')}}
+        </a-button>
       </div>
     </div>
   </div>
@@ -53,7 +54,8 @@ export default {
       type: 1,
       PhoneFormSetting,
       EmailFormSetting,
-      isAgree: false
+      isAgree: false,
+      loading: false
     }
   },
   methods: {
@@ -70,10 +72,13 @@ export default {
           delete value.passwordCopy
           value.password = md5(value.password)
 
+          this.loading = true
           registerPhone(value).then(res => {
+            this.loading = false
             this.$message.success('注册成功，请登录！')
             this.$router.push('/login')
           }).catch(err => {
+            this.loading = false
             this.$message.error(err || '注册失败，请稍后再试！')
           })
         })
@@ -85,10 +90,13 @@ export default {
           delete value.passwordCopy
           value.password = md5(value.password)
 
+          this.loading = true
           registerEmail(value).then(res => {
+            this.loading = false
             this.$message.success('注册成功，请登录！')
             this.$router.push('/login')
           }).catch(err => {
+            this.loading = false
             this.$message.error(err || '注册失败，请稍后再试！')
           })
         })

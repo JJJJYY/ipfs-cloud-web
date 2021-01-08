@@ -40,26 +40,25 @@
       <div class="product-list">
         <div class="product-item" v-for='(item,index) in detail.info || []' :key='index'>
           <div class='cube name'>{{ item.product_name }}</div>
-          <div class='cube'>{{ '--' }}</div>
-          <div class='cube'>单价：{{ item.price }}/{{ item.unit }}</div>
-          <div class='cube'>数量：{{ item.quantity }}{{ item.unit }}</div>
-          <div class='cube flex-6'>小计：<span
-              class='total-price orange-mark'>¥{{ item.total_amount }}</span>
+          <div class='cube specs'>{{ item.specs }}</div>
+          <div class='cube'>单价：{{ item.price }} 元/{{ item.unit }}</div>
+          <div class='cube'>数量：{{ item.quantity }} 集群</div>
+          <div class='cube'>小计：<span class='total-price orange-mark'>¥{{ item.total_amount }}</span>
           </div>
         </div>
         <div class="product-item">
           <div class='cube name'>技术服务费</div>
-          <div class='cube'>20%/年</div>
+          <div class='cube'>{{ Number(detail.service_fee || 0) * 100}}%/年</div>
           <div class='cube'></div>
           <div class='cube'></div>
-          <div class='cube flex-6'></div>
+          <div class='cube'></div>
         </div>
         <div class="product-item" v-if='Number(detail.discount)!=1'>
           <div class='cube name'>专享折扣</div>
           <div class='cube'>{{ detail.discount && Number(detail.discount)*10 }}折</div>
           <div class='cube'></div>
           <div class='cube'></div>
-          <div class='cube flex-6'></div>
+          <div class='cube'></div>
         </div>
       </div>
 
@@ -150,6 +149,12 @@ export default {
     }
     .cube{
       flex:1;
+    }
+    .cube.specs{
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-right:10px;
     }
     .flex-6{
       flex:0.6;

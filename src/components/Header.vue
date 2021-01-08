@@ -57,10 +57,10 @@ export default {
   },
   methods: {
     logout() {
+      this.$store.commit('updateUser', {})
       logout().then(res => {
         this.$message.success('退出登录成功！')
         localStorage.removeItem('token')
-        this.$store.commit('updateUser', {})
         this.$router.replace('/')
       }).catch(err => {
         this.$message.error(err || '操作失败，请稍后再试！')

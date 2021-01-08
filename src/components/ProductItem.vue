@@ -13,17 +13,17 @@
           <div class="label">{{ data.specs }}</div>
         </div>
         <div v-if='data.price' class='item'>
-          <div class="label">单价/{{ data.type && data.type.unit || ''}}</div>
+          <div class="label">单价/元/{{ data.type && data.type.unit || ''}}</div>
           <div class="label">{{ data.price }}</div>
         </div>
-        <div v-if='data.lowest_num' class='item'>
+        <div v-if='data.lowest_num && data.lowest_num!=1' class='item'>
           <div class="label">最低起购/{{ data.type && data.type.unit || ''}}</div>
           <div class="label">{{ data.lowest_num }}</div>
         </div>
       </div>
       <div class='panel-footer'>
         <div>{{$t('message.__JG__')}}
-          <span class='price'>￥{{ data.price }}</span>
+          <span class='price'>￥{{ data.price * data.lowest_num }}</span>
         </div>
         <div v-if='data.info && data.info.length!==0' class="open-icon" @click='handleOpen'>
           <img src="@/assets/image/down-icon.png" alt="" v-if=" !open">
@@ -113,6 +113,7 @@ export default {
       color: #333333;
       line-height: 28px;
       margin:19px 0 34px;
+      word-break: break-all;
     }
     .config-items{
       padding:12px 19px 13px 22px;

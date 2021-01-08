@@ -10,20 +10,22 @@
         <div class="product-item" v-for='(item,index) in productList' :key='index'>
           <div class='cube name'>{{ item.type && item.type.product_type_name || '' }}</div>
           <div class='cube'>
-            <span v-if='item.specs'>规格型号：{{ item.specs }}</span>
+            <span v-if='item.specs'>{{ item.specs }}</span>
             <span v-if='item.rate'>{{ item.rate }}</span>
           </div>
           <div class='cube'>
-            <span
-              v-if='item.price'>单价：{{ item.price }}/{{ item.type && item.type.unit || ''}}</span>
+            <span v-if='item.price'>单价：{{ item.price }}
+              元/{{ item.type && item.type.unit || ''}}</span>
           </div>
           <div class='cube'>
             <span v-if='item.lowest_num'>数量：{{ item.lowest_num * amount }}
               {{ item.type && item.type.unit || ''}}</span>
           </div>
-          <div class='cube flex-75'>
+          <div class='cube'>
             <div v-if='item.price'>
-              小计：<span class='total-price orange-mark'>¥{{ item.price * amount }}</span></div>
+              小计：<span
+                class='total-price orange-mark'>¥{{ item.price * amount * item.lowest_num }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -53,7 +55,7 @@
       <div class="computed-row">
         <div class="total">总共配置费用：<span class='unit orange-mark'>¥</span><span
             class='number orange-mark'>{{ totalFee }}</span></div>
-        <a-button type='primary' @click='submit'>立即购买</a-button>
+        <a-button type='primary' :loading='loading' @click='submit'>立即购买</a-button>
       </div>
     </div>
     <Footer></Footer>
@@ -71,6 +73,7 @@ const DefaultProduct = [{
   },
   rate: '20%/年'
 }]
+
 export default {
   name: 'order-detail',
   components: {
@@ -79,6 +82,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       ids: undefined,
       amount: 1,
       productList: [],
@@ -103,6 +107,9 @@ export default {
     amount(val) {
       if (!(/^[0-9]+$/.test(val))) {
         this.amount = val.slice(0, -1)
+      }
+      if (Number(this.amount > 100000)) {
+        this.amount = 100000
       }
     }
   },
@@ -135,14 +142,17 @@ export default {
         this.$message.error('手机号不合法！')
         return
       }
+      this.loading = true
       addOrder({
         ids: this.ids,
         num: this.amount,
         ...this.info
       }).then(res => {
+        this.loading = false
         this.$message.success('购买成功！')
         this.$router.push('/mine/order')
       }).catch(err => {
+        this.loading = false
         this.$message.error(err || '购买失败，请稍后再试！')
       })
     },
@@ -194,6 +204,9 @@ export default {
     }
     .cube{
       flex:1;
+    }
+    .cube.align-right{
+      text-align: right;
     }
     .flex-75{
       flex:0.6;
