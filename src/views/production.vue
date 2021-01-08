@@ -3,12 +3,16 @@
     <Header name='production'></Header>
     <div class='banner'></div>
     <div class="production-content">
+
       <div class="content-hint">
         {{$t('message.__WXTSYRHWTHYLXKFLXDH__')}}
         <span class='orange-mark pointer'
           @click="$goto('/information/help')">{{$t('message.__BZZX__')}}</span>
       </div>
-      <div class="panel">
+
+      <a-spin v-show='list.length===0' />
+
+      <div class="panel" v-show='list.length!==0'>
         <template v-for='(item,index) in list'>
           <div class="product-row" :key='index'>
             <ProductItem v-if='item[0]' :data='item[0]' :activeId='activeId'
@@ -178,7 +182,9 @@ export default {
   background-size: cover;
 }
 .production-content{
+  position: relative;
   width: 1200px;
+  min-height: 500px;
   margin:0 auto ;
   padding-bottom:227px;
   .content-hint{
@@ -189,6 +195,13 @@ export default {
     font-weight: 400;
     color: #151420;
     line-height: 18px;
+  }
+  .ant-spin{
+    position: absolute;
+    z-index: 10;
+    left:50%;
+    top:50%;
+    transform: translate3d(-50%,-50%);
   }
 }
 .panel{

@@ -2,7 +2,7 @@
   <div class='order-detail-page'>
     <Header></Header>
     <div class="page-title">
-      <span class='orange-mark'>产品</span>
+      <span class='orange-mark pointer' @click="$goto('/production')">产品</span>
       > 订单详情
     </div>
     <div class='content-panel'>
@@ -97,10 +97,10 @@ export default {
       let fee = 0
       this.productList.forEach(item => {
         if (item.price) {
-          fee += item.price * this.amount
+          fee += item.price * item.lowest_num
         }
       })
-      return fee
+      return fee * this.amount
     }
   },
   watch: {
