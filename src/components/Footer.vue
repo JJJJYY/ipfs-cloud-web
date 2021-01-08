@@ -24,13 +24,13 @@
 
         <div class="qrcode-area">
           <div class="qrcode-1">
-            <img src="" class='img' alt="">
+            <img src="@/assets/image/qrcode.jpg" class='img' alt="">
             <div>客服微信</div>
           </div>
-          <div class="qrcode-2">
+          <!-- <div class="qrcode-2">
             <img src="" class='img' alt="">
             <div>微信公众号</div>
-          </div>
+          </div> -->
         </div>
 
       </div>
@@ -114,8 +114,8 @@ export default {
       font-family: Source Han Sans CN;
       font-weight: 400;
       color: #CDCDCD;
-      .qrcode-1{
-        margin-right:76px;
+      .qrcode-2{
+        margin-left:76px;
       }
       .img{
         width:86px;

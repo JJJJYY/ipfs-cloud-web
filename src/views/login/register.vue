@@ -25,8 +25,9 @@
           <img v-show='!isAgree' class='pointer checkbox-icon' src="@/assets/image/checkbox.png"
             alt="" @click='isAgree=true'>
           <img v-show='isAgree' class='pointer checkbox-icon' src="@/assets/image/checkbox-fill.png"
-            alt="" @click='isAgree=false'>{{$t('message.__WYYDBTY__')}} <span
-            class='orange-mark pointer'>{{$t('message.__YHXY__')}}</span>
+            alt="" @click='isAgree=false'>{{$t('message.__WYYDBTY__')}}
+          <span class='orange-mark pointer'
+            @click="$goto('/userProtocol')">{{$t('message.__YHXY__')}}</span>
         </div>
 
         <a-button type='primary' @click='register'>{{$t('message.__LJZC__')}}</a-button>

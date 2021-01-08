@@ -37,7 +37,7 @@
       <div class="h1">可通过以下方式接洽商务人员</div>
       <p class='p1'>邮箱：235922345@qq.com</p>
       <p class='p1'>二维码：</p>
-      <img src="" class='qrcode' alt="">
+      <img src="@/assets/image/qrcode.jpg" class='qrcode' alt="">
 
     </div>
     <Footer></Footer>

@@ -77,6 +77,14 @@ const routes = [
       keepAlive: false
     }
   }, {
+    path: '/userProtocol',
+    name: 'userProtocol',
+    component: () => import('../views/login/user-protocol'),
+    meta: {
+      isAuth: false,
+      keepAlive: false
+    }
+  }, {
     path: '/findPassword',
     name: 'findPassword',
     component: () => import('../views/login/find-password'),
