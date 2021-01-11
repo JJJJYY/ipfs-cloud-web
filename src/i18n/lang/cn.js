@@ -36,7 +36,7 @@ export const message = {
   __QSRXMM__: '请输入新密码',
   __QQRXMM__: '请确认新密码',
   __ZCZH__: '注册账号',
-  __WXTSYRHWTHYLXKFLXDH__: '温馨提示：有任何问题，欢迎联系客服，联系电话：135 2658 7582',
+  __WXTSYRHWTHYLXKFLXDH__: '温馨提示：有任何问题，欢迎联系客服，联系电话：',
   __BZZX__: '帮助中心',
   __JG__: '价格：',
   __TJDD__: '提交订单'

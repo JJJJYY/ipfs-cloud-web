@@ -134,10 +134,10 @@ export function getProductType() {
 
 // 获取选择的产品列表
 export function getSelectedProduct(params) {
-  const data = stringify(params)
   return request({
-    url: '/product/order?' + data,
-    method: 'get',
+    url: '/product/order',
+    method: 'post',
+    data: params
   })
 }
 

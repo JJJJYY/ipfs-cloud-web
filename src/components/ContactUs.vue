@@ -4,7 +4,7 @@
     <div class="qrcode-panel">
       <img src="@/assets/image/qrcode.jpg" class='qrcode-img' alt="">
       <div class='hint'>客服二维码</div>
-      <div class="phone">150 8652 2535</div>
+      <div class="phone">0755-86966414</div>
     </div>
     <div class="fixed-cube">
       <img src="@/assets/image/chat.png" class='chat-img' alt="">

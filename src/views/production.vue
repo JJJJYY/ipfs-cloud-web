@@ -5,7 +5,7 @@
     <div class="production-content">
 
       <div class="content-hint">
-        {{$t('message.__WXTSYRHWTHYLXKFLXDH__')}}
+        {{$t('message.__WXTSYRHWTHYLXKFLXDH__')}}0755-86966414
         <span class='orange-mark pointer'
           @click="$goto('/information/help')">{{$t('message.__BZZX__')}}</span>
       </div>
@@ -123,7 +123,7 @@ export default {
         return
       }
       if (this.$store.state.user.id) {
-        this.$router.push({ name: 'orderDetail', query: { ids: this.allIds.join(',') } })
+        this.$router.push({ name: 'orderDetail', params: { ids: this.allIds.join(',') } })
       } else {
         this.$message.error('请先登录！')
         this.$router.push('/login')

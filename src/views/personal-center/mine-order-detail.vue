@@ -20,7 +20,6 @@
           <span class="label">订单状态：</span>
           <span
             class="value">{{ detail.status==0?'已取消':detail.status==1?'已下单':detail.status == 2 ?'已完成':'' }}
-            {{detail.status}}
           </span>
         </div>
         <div class="info-item">
@@ -45,7 +44,7 @@
           <div class='cube name'>{{ item.product_name }}</div>
           <div class='cube specs'>{{ item.specs }}</div>
           <div class='cube'>单价：{{ item.price }} 元/{{ item.unit }}</div>
-          <div class='cube'>数量：{{ item.quantity }} 集群</div>
+          <div class='cube'>数量：{{ item.quantity * item.lowest_num }} {{ item.unit }}</div>
           <div class='cube'>小计：<span class='total-price orange-mark'>¥{{ item.total_amount }}</span>
           </div>
         </div>
@@ -66,7 +65,7 @@
       </div>
 
       <div class='fee-info'>
-        <div class="total">总共配置费用：<span class='unit orange-mark'>¥</span><span
+        <div class="total">数量: {{detail.num}} 集群，总共配置费用：<span class='unit orange-mark'>¥</span><span
             class='number orange-mark'>{{ detail.total_amount }}</span></div>
         <div class='hint'>已下单，请稍等，平台客户将主动联系您</div>
       </div>
@@ -204,8 +203,9 @@ export default {
   }
 }
 .fee-info{
-  margin-left: 790px;
+  text-align: right;
   margin-top:23px;
+  padding-right:41px;
   padding-bottom:42px;
   .total{
     font-size: 18px;

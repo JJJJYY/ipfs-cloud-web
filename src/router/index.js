@@ -28,7 +28,8 @@ const routes = [
     component: () => import('../views/personal-center/mine'),
     redirect: { name: 'order' },
     meta: {
-      keepAlive: false
+      keepAlive: false,
+      isAuth: true,
     },
     children: [
       {
@@ -158,7 +159,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.isAuth === false) {
     next()
   } else {
-    if (!localStorage.getItem('token')) {
+    if (!localStorage.getItem('token') && to.path !== '/login') {
       next({ name: 'login' })
     } else {
       next()

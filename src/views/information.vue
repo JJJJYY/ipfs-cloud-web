@@ -44,9 +44,10 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     this.setTab(to);
+    document.getElementById('app').scrollTop = 0;
     next();
   },
-  mounted() {
+  activated() {
     this.setTab(this.$route);
     document.getElementById('app').scrollTop = 0;
   },

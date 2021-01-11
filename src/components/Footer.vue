@@ -17,7 +17,7 @@
 
         <div class="list-2 list">
           <div class="list-title">信息</div>
-          <div class="list-item" @click="$goto('/information')">公告</div>
+          <div class="list-item" @click="$goto('/information/notice')">公告</div>
           <div class="list-item" @click="$goto('/information/help')">帮助中心</div>
           <div class="list-item" @click="$goto('/business')">商务合作</div>
         </div>

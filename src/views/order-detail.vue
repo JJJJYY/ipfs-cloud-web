@@ -114,7 +114,7 @@ export default {
     }
   },
   created() {
-    const ids = this.$route.query.ids
+    const ids = this.$route.params.ids
     if (!ids) {
       this.$message.error('请先选择要购买的产品！')
       this.$router.push('/production')
