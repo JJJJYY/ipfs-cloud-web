@@ -13,28 +13,28 @@
 
     <div class='table-area'>
       <div class="table-header">
-        <span class='th'>订单号</span>
+        <span class='th flex-1-2'>订单号</span>
         <span class='th name'>产品名称</span>
         <span class='th'>创建时间</span>
         <span class='th time'>支付时间</span>
         <span class='th amount'>付款金额（￥）</span>
         <span class='th flex-0-5'>状态</span>
-        <span class='th'>操作</span>
+        <span class='th align-right'>操作</span>
       </div>
       <div class="table-body">
         <div v-show='tableData.length===0' class='empty-hint'>暂无订单记录</div>
         <div class="table-item" v-for='(item,index) in tableData ||[]' :key='index'>
-          <span class='td'>{{ item.order_code }}</span>
+          <span class='td flex-1-2'>{{ item.order_code }}</span>
           <span class='td name'>{{ item.group && item.group.product_group_name || '' }}</span>
           <span class='td'>{{ item.created_at }}</span>
           <span class='td time'>{{item.status == 2 ? item.pay_time : '--' }}</span>
           <span class='td amount'>{{ item.total_amount }}</span>
           <span
             class='td flex-0-5'>{{ item.status==0?'已取消':item.status==1?'已下单':item.status==2?'已完成':'' }}</span>
-          <div class='td'>
+          <div class='td align-right'>
             <a-button type='link' @click="$goto('/mineOrderDetail?id='+item.id)">详情</a-button>
-            <a-button type='link' v-if='item.status==1' @click='handleCancel(item.id)'
-              :disabled='canceling.indexOf(item.id)>-1'>取消订单
+            <a-button type='link' :class="[item.status!=1?'disable-btn':'']"
+              @click='handleCancel(item.id)' :disabled='canceling.indexOf(item.id)>-1'>取消订单
             </a-button>
           </div>
         </div>
@@ -202,7 +202,10 @@ export default {
   }
   .table-header,.table-item {
     .flex-0-5{
-      flex:0.5;
+      flex:0.4;
+    }
+    .flex-1-2{
+      flex:1.2;
     }
     .amount{
       margin-left:24px;
@@ -213,12 +216,23 @@ export default {
     .name{
       margin-left:6px;
     }
+    .align-right{
+      text-align: right;
+    }
   }
   .ant-btn-link{
     padding:0;
   }
   .ant-btn-link + .ant-btn-link{
-    margin-left:30px;
+    margin-left:10px;
+  }
+  .ant-btn-link{
+    opacity: 1;
+    pointer-events: auto;
+    &.disable-btn{
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 }
 .empty-hint{

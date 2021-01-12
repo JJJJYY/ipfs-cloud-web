@@ -65,6 +65,11 @@ export default {
     }
   },
   created() {
+    if (!localStorage.getItem('token')) {
+      this.$message.error('请先登录')
+      this.$router.push('/login')
+      return
+    }
     this.activeKey = this.$route.path.replace('/mine/', '')
   },
   beforeRouteUpdate(to, from, next) {
