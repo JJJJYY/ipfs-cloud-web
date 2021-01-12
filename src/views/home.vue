@@ -73,7 +73,8 @@
     <div class="area-4">
       <div class="area-title">合作伙伴</div>
       <div class='area-content'>
-        <div class='img-wrapper' v-for='(item,i) in partnerList' :key='i'>
+        <div :class="['img-wrapper',partnerList.length > 5?'align-left':'']"
+          v-for='(item,i) in partnerList' :key='i'>
           <img :src="item.image" class='partner-img' alt="" @click='goto(item.link)'>
         </div>
       </div>
@@ -282,11 +283,13 @@ export default {
     margin:83px auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
     .img-wrapper{
       flex:1;
       text-align: center;
+      &.align-left{
+        text-align: left;
+        padding:0 18px;
+      }
     }
     .partner-img{
       width:204px;

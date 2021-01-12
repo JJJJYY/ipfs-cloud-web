@@ -26,8 +26,8 @@
         <div class="table-item" v-for='(item,index) in tableData ||[]' :key='index'>
           <span class='td'>{{ item.order_code }}</span>
           <span class='td name'>{{ item.group && item.group.product_group_name || '' }}</span>
-          <span class='td'>{{ $formatTime(item.created_at) }}</span>
-          <span class='td time'>{{ $formatTime(item.pay_time) }}</span>
+          <span class='td'>{{ item.created_at }}</span>
+          <span class='td time'>{{item.status == 2 ? item.pay_time : '--' }}</span>
           <span class='td amount'>{{ item.total_amount }}</span>
           <span
             class='td flex-0-5'>{{ item.status==0?'已取消':item.status==1?'已下单':item.status==2?'已完成':'' }}</span>

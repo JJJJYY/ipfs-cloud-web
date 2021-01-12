@@ -32,11 +32,11 @@
         </div>
         <div class="info-item">
           <span class="label">创建时间：</span>
-          <span class="value">{{ $formatTime(detail.created_at) }}</span>
+          <span class="value">{{detail.created_at }}</span>
         </div>
-        <div class="info-item" v-if='detail.status ==2 '>
+        <div class="info-item" v-if='detail.status == 2 '>
           <span class="label">完成时间：</span>
-          <span class="value">{{ $formatTime(detail.created_at) }}</span>
+          <span class="value">{{ detail.pay_time }}</span>
         </div>
       </div>
       <div class="product-list">

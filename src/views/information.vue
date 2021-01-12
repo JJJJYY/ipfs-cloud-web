@@ -43,9 +43,13 @@ export default {
     };
   },
   beforeRouteUpdate(to, from, next) {
-    this.setTab(to);
     document.getElementById('app').scrollTop = 0;
+    this.setTab(to);
     next();
+  },
+  created() {
+    this.setTab(this.$route);
+    document.getElementById('app').scrollTop = 0;
   },
   activated() {
     this.setTab(this.$route);
