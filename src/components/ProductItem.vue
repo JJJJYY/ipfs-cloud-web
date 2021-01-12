@@ -94,6 +94,9 @@ export default {
 <style lang="less" scoped>
 .product-item{
   .product-panel{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     padding:33px 25px 26px;
     .title{
       .ant-checkbox-wrapper{
@@ -109,6 +112,7 @@ export default {
       }
     }
     .introduce{
+      flex:1;
       font-size: 17px;
       color: #333333;
       line-height: 28px;

@@ -48,7 +48,7 @@ export function registerPhone(params) {
 //  发送短信验证码
 export function sendPhoneCode(params) {
   return request({
-    url: '/user/send_phone',
+    url: '/user/resetSendPhone',
     method: 'post',
     data: params
   })
@@ -57,7 +57,7 @@ export function sendPhoneCode(params) {
 //   发送邮箱验证码
 export function sendEmailCode(params) {
   return request({
-    url: '/user/send_email',
+    url: '/user/resetSendEmail',
     method: 'post',
     data: params
   })
