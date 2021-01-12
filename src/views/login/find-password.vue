@@ -74,7 +74,8 @@ const FormSetting = [{
   relationType: 'phoneOrEmail',
   relationKey: 'account',
   relationLabel: '手机号或邮箱',
-  placeholder: 'message.__QSRYZM__'
+  placeholder: 'message.__QSRYZM__',
+  isFindPassword: true
 }, {
   label: 'message.__SZMM__',
   key: 'password',

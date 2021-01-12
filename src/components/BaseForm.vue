@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { sendPhoneCode, sendEmailCode } from '../api'
+import { sendPhoneCode, sendEmailCode, sendPhoneCodeFindPaw, sendEmailCodeFindPaw } from '../api'
 
 const DefaultSecond = 59
 export default {
@@ -103,9 +103,9 @@ export default {
         this.sendEmailCode(value)
       } else if (type === 'phoneOrEmail') {
         if (/^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(value)) {
-          this.sendEmailCode(value)
+          this.sendEmailCode(value, item.isFindPassword)
         } else if (/^1[3456789]\d{9}$/.test(value)) {
-          this.sendPhoneCode(value)
+          this.sendPhoneCode(value, item.isFindPassword)
         }
       }
     },
@@ -145,25 +145,47 @@ export default {
         return '请输入' + this.$t(item.label)
       }
     },
-    sendEmailCode(value) {
-      sendEmailCode({
-        email: value
-      }).then(res => {
-        this.$message.success('验证码已发送 ~')
-      }).catch(err => {
-        this.$message.error(err || '发送失败，请稍后再试！')
-        this.clearCountDown()
-      })
+    sendEmailCode(value, isFindPassword) {
+      if (!isFindPassword) {
+        sendEmailCode({
+          email: value
+        }).then(res => {
+          this.$message.success('验证码已发送 ~')
+        }).catch(err => {
+          this.$message.error(err || '发送失败，请稍后再试！')
+          this.clearCountDown()
+        })
+      } else {
+        sendEmailCodeFindPaw({
+          email: value
+        }).then(res => {
+          this.$message.success('验证码已发送 ~')
+        }).catch(err => {
+          this.$message.error(err || '发送失败，请稍后再试！')
+          this.clearCountDown()
+        })
+      }
     },
-    sendPhoneCode(value) {
-      sendPhoneCode({
-        phone: value
-      }).then(res => {
-        this.$message.success('验证码已发送 ~')
-      }).catch(err => {
-        this.$message.error(err || '发送失败，请稍后再试！')
-        this.clearCountDown()
-      })
+    sendPhoneCode(value, isFindPassword) {
+      if (!isFindPassword) {
+        sendPhoneCode({
+          phone: value
+        }).then(res => {
+          this.$message.success('验证码已发送 ~')
+        }).catch(err => {
+          this.$message.error(err || '发送失败，请稍后再试！')
+          this.clearCountDown()
+        })
+      } else {
+        sendPhoneCodeFindPaw({
+          phone: value
+        }).then(res => {
+          this.$message.success('验证码已发送 ~')
+        }).catch(err => {
+          this.$message.error(err || '发送失败，请稍后再试！')
+          this.clearCountDown()
+        })
+      }
     },
     // 倒计时
     countDown() {
