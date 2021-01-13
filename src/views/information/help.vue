@@ -98,6 +98,12 @@ export default {
     border-radius: 5px;
     margin-right: 18px;
   }
+  .name{
+    flex:1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .time{
     margin-left: auto;
   }
