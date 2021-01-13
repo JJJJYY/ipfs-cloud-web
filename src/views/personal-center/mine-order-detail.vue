@@ -44,7 +44,8 @@
           <div class='cube name'>{{ item.product_name }}</div>
           <div class='cube specs'>{{ item.specs }}</div>
           <div class='cube'>单价：{{ item.price }} 元/{{ item.unit }}</div>
-          <div class='cube'>数量：{{ item.quantity * item.lowest_num }} {{ item.unit }}</div>
+          <div class='cube'>数量：{{ item.quantity * item.lowest_num }}
+            {{ item.unit && item.unit.replace('年/','') }}</div>
           <div class='cube'>小计：<span class='total-price orange-mark'>¥{{ item.total_amount }}</span>
           </div>
         </div>

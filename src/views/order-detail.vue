@@ -19,7 +19,7 @@
           </div>
           <div class='cube'>
             <span v-if='item.lowest_num'>数量：{{ item.lowest_num * amount }}
-              {{ item.type && item.type.unit || ''}}</span>
+              {{ (item.type && item.type.unit).replace('年/','') || ''}}</span>
           </div>
           <div class='cube'>
             <div v-if='item.price'>
@@ -108,8 +108,11 @@ export default {
       if (!(/^[0-9]+$/.test(val))) {
         this.amount = val.slice(0, -1)
       }
-      if (Number(this.amount > 100000)) {
-        this.amount = 100000
+      if (Number(this.amount > 10000000)) {
+        this.amount = 10000000
+      }
+      if (Number(this.amount <= 0)) {
+        this.amount = 1
       }
     }
   },

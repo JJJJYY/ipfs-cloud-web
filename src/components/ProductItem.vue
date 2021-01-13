@@ -13,8 +13,8 @@
           <div class="label">{{ data.specs }}</div>
         </div>
         <div v-if='data.price' class='item'>
-          <div class="label">单价/元/{{ data.type && data.type.unit || ''}}</div>
-          <div class="label">{{ data.price }}</div>
+          <div class="label">单价/{{ data.type && data.type.unit || ''}}</div>
+          <div class="label">￥{{ data.price }}</div>
         </div>
         <div v-if='data.lowest_num && data.lowest_num!=1' class='item'>
           <div class="label">最低起购/{{ data.type && data.type.unit || ''}}</div>
