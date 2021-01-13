@@ -73,6 +73,11 @@ export default {
     this.activeKey = this.$route.path.replace('/mine/', '')
   },
   beforeRouteUpdate(to, from, next) {
+    if (!localStorage.getItem('token')) {
+      this.$message.error('请先登录')
+      this.$router.push('/login')
+      return
+    }
     const path = to.path
     if (/^\/mine\//.test(path)) {
       this.activeKey = path.replace('/mine/', '')
