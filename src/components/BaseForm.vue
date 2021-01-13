@@ -191,6 +191,7 @@ export default {
     countDown() {
       this.second = DefaultSecond
       this.isCountDown = true
+      clearTimeout(this.timer)
       this.countDownHandler()
     },
     countDownHandler() {
