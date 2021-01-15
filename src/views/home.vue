@@ -13,7 +13,7 @@
     <div class="split-line"></div>
 
     <div class="area-1">
-      <div class="area-title">轻松挖矿</div>
+      <!-- <div class="area-title">轻松挖矿</div> -->
       <div class="hint hint-2">轻松获取有效存储算力，键化繁琐的步骤，直接开启存储算力</div>
 
       <div class="cube-row">
@@ -147,6 +147,7 @@ export default {
   &.hint-2{
     font-size: 16px;
     margin-bottom: 39px;
+    margin-top: 15px;
   }
 }
 .button{
@@ -164,15 +165,15 @@ export default {
   margin:36px 0 54px;
   border-top: 1px solid #F3F3F3;
 }
-.area-1{
-  .area-title{
-    font-size: 30px;
-    font-weight: bold;
-    color: #333333;
-    text-align: center;
-    margin-bottom:15px;
-  }
-}
+// .area-1{
+//   .area-title{
+//     font-size: 30px;
+//     font-weight: bold;
+//     color: #333333;
+//     text-align: center;
+//     margin-bottom:15px;
+//   }
+// }
 .cube-row{
   display: flex;
   align-items: center;
