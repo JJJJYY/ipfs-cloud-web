@@ -1,7 +1,9 @@
 <template>
   <div class='production-page'>
     <Header name='production'></Header>
-    <div class='banner'></div>
+    <div class='banner'>
+      <img src="@/assets/image/production-banner.jpg" class='banner-img' alt="">
+    </div>
     <div class="production-content">
 
       <div class="content-hint">
@@ -176,10 +178,15 @@ export default {
   background-color: #FBFBFB;
 }
 .banner{
-  width:100%;
-  height: 320px;
-  background: url('../assets/image/production-banner.png') center no-repeat;
-  background-size: cover;
+  background-color: #25252d;
+  .banner-img{
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    max-width:1920px;
+    display: block;
+    object-fit: cover;
+  }
 }
 .production-content{
   position: relative;

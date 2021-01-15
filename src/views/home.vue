@@ -134,14 +134,7 @@ export default {
 .home-page{
   color:#333;
 }
-.banner-area{
-  width:100%;
-  height: 580px;
-  background-color: #000000;
-  color:#fff;
-  font-size: 56px;
-  font-family: Source Han Sans CN;
-}
+
 .hint{
   font-size: 18px;
   font-family: Source Han Sans CN;
@@ -301,7 +294,13 @@ export default {
 </style>
 
 <style lang="less">
-.home-page .ant-carousel .slick-list{
-  max-height: 580px;
+.home-page .ant-carousel{
+  background-color: #27262c;
+  .slick-list {
+    max-width: 1920px;
+    position: relative;
+    left:50%;
+    transform: translate(-50%);
+  }
 }
 </style>
