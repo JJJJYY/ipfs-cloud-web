@@ -296,7 +296,8 @@ export default {
 
 <style lang="less">
 .home-page .ant-carousel{
-  background-color: #27262c;
+  // background-color: #27262c;
+  background: url(../assets/image/banner_bg.png) repeat-x;
   .slick-list {
     max-width: 1920px;
     position: relative;

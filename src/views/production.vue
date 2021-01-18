@@ -178,7 +178,8 @@ export default {
   background-color: #FBFBFB;
 }
 .banner{
-  background-color: #25252d;
+  // background-color: #25252d;
+  background: url(../assets/image/banner_bg.png) repeat-x;
   .banner-img{
     position: relative;
     left: 50%;
