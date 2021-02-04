@@ -197,6 +197,7 @@ export default {
     // 增加
     handleAdd(item) {
       if (item.stock && (Number(item.amount) + 1 > Number(item.stock))) {
+        this.$message.error('数量超出范围 ~')
         item.amount = Number(item.stock)
       } else {
         item.amount = Number(item.amount) + 1
@@ -210,6 +211,7 @@ export default {
         item.amount = val.slice(0, -1)
       }
       if (item.stock && (Number(val) > Number(item.stock))) {
+        this.$message.error('数量超出范围 ~')
         item.amount = Number(item.stock)
         return
       }
