@@ -35,8 +35,8 @@
             <a-button type='link' v-if='item.status==1' @click='handleCancel(item.id)'
               :disabled='canceling.indexOf(item.id)>-1'>取消订单
             </a-button>
-            <a-button type='link' v-if='item.status==2'>实际运行情况
-            </a-button>
+            <!-- <a-button type='link' v-if='item.status==2'>实际运行情况
+            </a-button> -->
             <a-button type='link' @click="$goto('/mineOrderDetail?id='+item.id)">详情</a-button>
           </div>
         </div>

@@ -44,9 +44,10 @@
           <div class='cube name'>{{ item.product_name }}</div>
           <div class='cube specs'>{{ item.specs }}</div>
           <div class='cube'>单价：{{ item.total_price }} 元</div>
-          <div class='cube'>数量：{{ item.quantity  }}
-            {{ item.unit && item.unit.replace('年/','') }}</div>
-          <div class='cube'>折扣：{{ item.discount }}</div>
+          <div class='cube'>数量：{{ item.quantity }}</div>
+          <div class='cube' v-show='detail.status ==2'>
+            折扣：{{ item.discount }}
+          </div>
           <div class='cube'>小计：<span class='total-price orange-mark'>¥{{ item.total_amount }}</span>
           </div>
         </div>
@@ -55,7 +56,7 @@
           <div class='cube'>{{ Number(detail.service_fee || 0) * 100}}%/年</div>
           <div class='cube'></div>
           <div class='cube'></div>
-          <div class='cube'></div>
+          <div class='cube' v-show='detail.status ==2'></div>
           <div class='cube'></div>
         </div>
         <!-- <div class="product-item" v-if='Number(detail.discount)!=1'>
