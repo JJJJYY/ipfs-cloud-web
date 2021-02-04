@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     alert() {
-      this.$message.success('此功能正在开发中，敬请期待 ~')
+      this.$message.error('此功能正在开发中，敬请期待！')
     }
   }
 

@@ -50,6 +50,7 @@ export default {
   methods: {
     goto(url) {
       if (!url) {
+        this.$message.error('此功能正在开发中，敬请期待！')
         return
       }
       this.$router.push(url)
