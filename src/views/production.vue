@@ -180,6 +180,8 @@ export default {
 .banner{
   // background-color: #25252d;
   background: url(../assets/image/banner_bg.png) repeat-x;
+  width: 100%;
+  overflow: hidden;
   .banner-img{
     position: relative;
     left: 50%;

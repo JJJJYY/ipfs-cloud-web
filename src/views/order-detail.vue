@@ -18,15 +18,13 @@
           </div>
           <div class='cube'>
             <div class="amount-selector" v-if='item.price'>
-              <span :class="['minus-btn',item.amount == 1 ? 'disable':'']"
-                @click='handleReduce(item)'>
+              <span class='minus-btn' @click='handleReduce(item)'>
                 <a-icon type="minus" />
               </span>
               <a-input v-model="item.amount" class='amount-input'
                 @change='handleAmountChange(item)'>
               </a-input>
-              <span :class="['plus-btn',item.amount == item.stock ? 'disable':'']"
-                @click='handleAdd(item)'>
+              <span class='plus-btn' @click='handleAdd(item)'>
                 <a-icon type="plus" />
               </span>
             </div>
@@ -190,6 +188,7 @@ export default {
       if (val - 1 > 0) {
         item.amount = val - 1
       } else {
+        this.$message.error('最低数量为 1 ~')
         item.amount = 1
       }
       this.computeTotalFee()
@@ -216,9 +215,11 @@ export default {
         return
       }
       if (Number(val) > 10000000) {
+        this.$message.error('数量超出范围 ~')
         item.amount = 10000000
       }
       if (Number(val) <= 0) {
+        this.$message.error('最低数量为 1 ~')
         item.amount = 1
       }
       this.computeTotalFee()
@@ -353,13 +354,13 @@ export default {
     pointer-events: auto;
     opacity: 1;
   }
-  .minus-btn, .plus-btn{
-    &.disable{
-      cursor: none;
-      opacity: 0.4;
-      pointer-events: none;
-    }
-   }
+  // .minus-btn, .plus-btn{
+  //   &.disable{
+  //     cursor: none;
+  //     opacity: 0.4;
+  //     pointer-events: none;
+  //   }
+  // }
 }
 .computed-row{
   display: flex;
