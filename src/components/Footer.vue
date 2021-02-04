@@ -10,8 +10,8 @@
         <div class="list-1 list">
           <div class="list-title">产品</div>
 
-          <div class="list-item" v-for='(item,i) in productList' :key="i"
-            @click="$goto('/production')">{{item.product_type_name}}
+          <div class="list-item" v-for='(item,i) in productList' :key="i" @click="alert">
+            {{item.product_type_name}}
           </div>
         </div>
 
@@ -58,6 +58,11 @@ export default {
     const list = this.$store.state.productList
     if (!list || list.length === 0) {
       this.$store.dispatch('setProductList')
+    }
+  },
+  methods: {
+    alert() {
+      this.$message.success('此功能正在开发中，敬请期待 ~')
     }
   }
 

@@ -7,25 +7,37 @@
     </div>
     <div class='content-panel'>
       <div class="product-list">
-        <div class="product-item" v-for='(item,index) in productList' :key='index'>
+        <div class="product-item" v-for='item in productList' :key='item.id'>
           <div class='cube name'>{{ item.type && item.type.product_type_name || '' }}</div>
           <div class='cube'>
             <span v-if='item.specs'>{{ item.specs }}</span>
             <span v-if='item.rate'>{{ item.rate }}</span>
           </div>
           <div class='cube'>
-            <span v-if='item.price'>单价：{{ item.price }}
-              元/{{ item.type && item.type.unit || ''}}</span>
+            <span v-if='item.price'>单价：{{ item.total_price }} 元</span>
           </div>
           <div class='cube'>
-            <span v-if='item.lowest_num'>数量：{{ item.lowest_num * amount }}
-              {{ (item.type && item.type.unit).replace('年/','') || ''}}</span>
+            <div class="amount-selector" v-if='item.price'>
+              <span :class="['minus-btn',item.amount == 1 ? 'disable':'']"
+                @click='handleReduce(item)'>
+                <a-icon type="minus" />
+              </span>
+              <a-input v-model="item.amount" class='amount-input'
+                @change='handleAmountChange(item)'>
+              </a-input>
+              <span :class="['plus-btn',item.amount == item.stock ? 'disable':'']"
+                @click='handleAdd(item)'>
+                <a-icon type="plus" />
+              </span>
+            </div>
           </div>
           <div class='cube'>
             <div v-if='item.price'>
-              小计：<span
-                class='total-price orange-mark'>¥{{ item.price * amount * item.lowest_num }}</span>
+              小计：<span class='total-price orange-mark'>¥{{ item.total_price * item.amount  }}</span>
             </div>
+          </div>
+          <div class='cube delete-cube'>
+            <span v-if='item.price' @click='handleDelete(item)'>删除</span>
           </div>
         </div>
       </div>
@@ -40,7 +52,7 @@
           </div>
         </div>
 
-        <div class='amount-selector'>
+        <!-- <div class='amount-selector'>
           <span class='minus-btn' @click='handleReduce'>
             <a-icon type="minus" />
           </span>
@@ -49,7 +61,7 @@
             <a-icon type="plus" />
           </span>
           集群
-        </div>
+        </div> -->
       </div>
 
       <div class="computed-row">
@@ -68,6 +80,7 @@ import Footer from '../components/Footer.vue'
 import { getSelectedProduct, addOrder } from '../api/index'
 
 const DefaultProduct = [{
+  id: 'feeId',
   type: {
     product_type_name: '技术服务费'
   },
@@ -83,41 +96,18 @@ export default {
   data() {
     return {
       loading: false,
-      ids: undefined,
       amount: 1,
+      ids: undefined,
       productList: [],
       info: {
         express_name: undefined,
         express_mobile: undefined
-      }
-    }
-  },
-  computed: {
-    totalFee() {
-      let fee = 0
-      this.productList.forEach(item => {
-        if (item.price) {
-          fee += item.price * item.lowest_num
-        }
-      })
-      return fee * this.amount
-    }
-  },
-  watch: {
-    amount(val) {
-      if (!(/^[0-9]+$/.test(val))) {
-        this.amount = val.slice(0, -1)
-      }
-      if (Number(this.amount > 10000000)) {
-        this.amount = 10000000
-      }
-      if (Number(this.amount <= 0)) {
-        this.amount = 1
-      }
+      },
+      totalFee: 0
     }
   },
   created() {
-    const ids = this.$route.params.ids
+    const ids = this.$route.query.ids
     if (!ids) {
       this.$message.error('请先选择要购买的产品！')
       this.$router.push('/production')
@@ -129,7 +119,12 @@ export default {
   methods: {
     render() {
       getSelectedProduct({ ids: this.ids }).then(res => {
-        this.productList = (res.data || []).concat(DefaultProduct)
+        const list = (res.data || []).concat(DefaultProduct)
+        this.productList = list.map(item => {
+          item.amount = 1
+          return item
+        })
+        this.computeTotalFee()
       })
     },
     submit() {
@@ -145,10 +140,15 @@ export default {
         this.$message.error('手机号不合法！')
         return
       }
+      const infoList = this.productList.filter(item => item.total_price).map(item => {
+        return {
+          id: item.id,
+          quantity: item.amount
+        }
+      })
       this.loading = true
       addOrder({
-        ids: this.ids,
-        num: this.amount,
+        info: infoList,
         ...this.info
       }).then(res => {
         this.loading = false
@@ -159,16 +159,68 @@ export default {
         this.$message.error(err || '购买失败，请稍后再试！')
       })
     },
-    handleReduce() {
-      if (this.amount - 1 > 0) {
-        this.amount -= 1
-      } else {
-        this.amount = 1
+    // 删除 某一个产品
+    handleDelete(item) {
+      if (this.productList.length === 2) {
+        this.$message.error('至少要购买一个产品！')
+        return
       }
+      const list = []
+      this.productList.forEach((prod, i) => {
+        if (String(prod.id) !== String(item.id)) {
+          list.push(prod)
+        }
+      })
+      this.productList = list
+      this.computeTotalFee()
     },
-    handleAdd() {
-      this.amount += 1
-    }
+    // 计算总费用
+    computeTotalFee() {
+      let fee = 0
+      this.productList.forEach(item => {
+        if (item.total_price) {
+          fee += item.total_price * Number(item.amount)
+        }
+      })
+      this.totalFee = fee
+    },
+    // 减少
+    handleReduce(item) {
+      const val = Number(item.amount)
+      if (val - 1 > 0) {
+        item.amount = val - 1
+      } else {
+        item.amount = 1
+      }
+      this.computeTotalFee()
+    },
+    // 增加
+    handleAdd(item) {
+      if (item.stock && (Number(item.amount) + 1 > Number(item.stock))) {
+        item.amount = Number(item.stock)
+      } else {
+        item.amount = Number(item.amount) + 1
+      }
+      this.computeTotalFee()
+    },
+    // 输入数量
+    handleAmountChange(item) {
+      const val = item.amount
+      if (!(/^[0-9]+$/.test(val))) {
+        item.amount = val.slice(0, -1)
+      }
+      if (item.stock && (Number(val) > Number(item.stock))) {
+        item.amount = Number(item.stock)
+        return
+      }
+      if (Number(val) > 10000000) {
+        item.amount = 10000000
+      }
+      if (Number(val) <= 0) {
+        item.amount = 1
+      }
+      this.computeTotalFee()
+    },
   }
 }
 </script>
@@ -207,6 +259,16 @@ export default {
     }
     .cube{
       flex:1;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .delete-cube{
+      min-width:40px;
+      flex:0.2;
+      white-space: nowrap;
+      color:#999999;
+      cursor: pointer;
     }
     .cube.align-right{
       text-align: right;
@@ -221,9 +283,9 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin:56px 0 70px;
+  background-color: #ECECEC;
+  border: 1px solid #ECECEC;
   .address-panel{
-    background-color: #ECECEC;
-    border: 1px solid #ECECEC;
     border-radius: 4px;
     padding:22px 150px 30px 27px;
     >.title{
@@ -255,31 +317,47 @@ export default {
     }
   }
 }
-.amount-selector{
+.amount-selector {
+  height: 100%;
   display: flex;
   white-space: nowrap;
   align-items: center;
-  font-size: 18px;
+  justify-content: center;
+  font-size: 16px;
   color: #666666;
+  .amount-input{
+    height: 29px;
+    width: 55px;
+  }
   .minus-btn{
-    height: 39px;
-    line-height: 39px;
-    padding:0 12px;
+    height: 29px;
+    line-height: 29px;
+    padding:0 8px;
     border:1px solid #CDCDCD;
     border-right: none;
-    cursor: pointer;
     border-radius: 4px 0 0 4px;
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 1;
   }
   .plus-btn{
-    height: 39px;
-    line-height: 39px;
-    padding:0 12px;
+    height: 29px;
+    line-height: 29px;
+    padding:0 8px;
     border:1px solid #CDCDCD;
     border-left: none;
-    margin-right: 17px;
-    cursor: pointer;
     border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 1;
   }
+  .minus-btn, .plus-btn{
+    &.disable{
+      cursor: none;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+   }
 }
 .computed-row{
   display: flex;

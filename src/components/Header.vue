@@ -8,7 +8,8 @@
         <div class="nav-area row-center">
           <div :class="['nav-item',name==='home'?'active':'']" @click="$goto('/')">
             {{$t('message.__SY__')}}</div>
-          <div :class="['nav-item',name==='production'?'active':'']" @click="$goto('/production')">
+          <div :class="['nav-item',name==='production'?'active':'']"
+            @click="$goto('/productionList')">
             {{$t('message.__CP__')}}</div>
           <div :class="['nav-item',name==='information'?'active':'']"
             @click="$goto('/information')">{{$t('message.__ZX__')}}</div>

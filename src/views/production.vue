@@ -120,12 +120,12 @@ export default {
       })
     },
     submit() {
-      if (this.selectedIds.length < this.total) {
-        this.$message.error('请选择所有产品！')
-        return
-      }
+      // if (this.selectedIds.length < this.total) {
+      //   this.$message.error('请选择所有产品！')
+      //   return
+      // }
       if (this.$store.state.user.id) {
-        this.$router.push({ name: 'orderDetail', params: { ids: this.allIds.join(',') } })
+        this.$router.push({ name: 'orderDetail', query: { ids: this.selectedIds.join(',') } })
       } else {
         this.$message.error('请先登录！')
         this.$router.push('/login')

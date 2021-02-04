@@ -26,10 +26,10 @@
           <span class="label">订单号：</span>
           <span class="value">{{ detail.order_code }}</span>
         </div>
-        <div class="info-item">
+        <!-- <div class="info-item">
           <span class="label">产品名称：</span>
           <span class="value">{{ detail.group && detail.group.product_group_name || '' }}</span>
-        </div>
+        </div> -->
         <div class="info-item">
           <span class="label">创建时间：</span>
           <span class="value">{{detail.created_at }}</span>
@@ -43,9 +43,10 @@
         <div class="product-item" v-for='(item,index) in detail.info || []' :key='index'>
           <div class='cube name'>{{ item.product_name }}</div>
           <div class='cube specs'>{{ item.specs }}</div>
-          <div class='cube'>单价：{{ item.price }} 元/{{ item.unit }}</div>
-          <div class='cube'>数量：{{ item.quantity * item.lowest_num }}
+          <div class='cube'>单价：{{ item.total_price }} 元</div>
+          <div class='cube'>数量：{{ item.quantity  }}
             {{ item.unit && item.unit.replace('年/','') }}</div>
+          <div class='cube'>折扣：{{ item.discount }}</div>
           <div class='cube'>小计：<span class='total-price orange-mark'>¥{{ item.total_amount }}</span>
           </div>
         </div>
@@ -55,18 +56,19 @@
           <div class='cube'></div>
           <div class='cube'></div>
           <div class='cube'></div>
+          <div class='cube'></div>
         </div>
-        <div class="product-item" v-if='Number(detail.discount)!=1'>
+        <!-- <div class="product-item" v-if='Number(detail.discount)!=1'>
           <div class='cube name'>专享折扣</div>
           <div class='cube'>{{ detail.discount && Number(detail.discount)*10 }}折</div>
           <div class='cube'></div>
           <div class='cube'></div>
           <div class='cube'></div>
-        </div>
+        </div> -->
       </div>
 
       <div class='fee-info'>
-        <div class="total">数量: {{detail.num}} 集群，总共配置费用：<span class='unit orange-mark'>¥</span><span
+        <div class="total">总共配置费用：<span class='unit orange-mark'>¥</span><span
             class='number orange-mark'>{{ detail.total_amount }}</span></div>
         <div class='hint'>已下单，请稍等，平台客户将主动联系您</div>
       </div>

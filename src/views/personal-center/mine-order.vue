@@ -14,7 +14,7 @@
     <div class='table-area'>
       <div class="table-header">
         <span class='th flex-1-2'>订单号</span>
-        <span class='th name'>产品名称</span>
+        <!-- <span class='th name'>产品名称</span> -->
         <span class='th'>创建时间</span>
         <span class='th time'>支付时间</span>
         <span class='th amount'>付款金额（￥）</span>
@@ -25,17 +25,19 @@
         <div v-show='tableData.length===0' class='empty-hint'>暂无订单记录</div>
         <div class="table-item" v-for='(item,index) in tableData ||[]' :key='index'>
           <span class='td flex-1-2'>{{ item.order_code }}</span>
-          <span class='td name'>{{ item.group && item.group.product_group_name || '' }}</span>
+          <!-- <span class='td name'>{{ item.group && item.group.product_group_name || '' }}</span> -->
           <span class='td'>{{ item.created_at }}</span>
           <span class='td time'>{{item.status == 2 ? item.pay_time : '--' }}</span>
           <span class='td amount'>{{ item.total_amount }}</span>
           <span
-            class='td flex-0-5'>{{ item.status==0?'已取消':item.status==1?'已下单':item.status==2?'已完成':'' }}</span>
+            class='td flex-0-5'>{{ item.status == 0 ? '已取消':item.status==1?'已下单':item.status == 2?'已完成':'' }}</span>
           <div class='td align-right'>
-            <a-button type='link' @click="$goto('/mineOrderDetail?id='+item.id)">详情</a-button>
-            <a-button type='link' :class="[item.status!=1?'disable-btn':'']"
-              @click='handleCancel(item.id)' :disabled='canceling.indexOf(item.id)>-1'>取消订单
+            <a-button type='link' v-if='item.status==1' @click='handleCancel(item.id)'
+              :disabled='canceling.indexOf(item.id)>-1'>取消订单
             </a-button>
+            <a-button type='link' v-if='item.status==2'>实际运行情况
+            </a-button>
+            <a-button type='link' @click="$goto('/mineOrderDetail?id='+item.id)">详情</a-button>
           </div>
         </div>
       </div>

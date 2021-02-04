@@ -14,6 +14,15 @@ const routes = [
     }
   },
   {
+    path: '/productionList',
+    name: 'ProductionList',
+    component: () => import('../views/production-list'),
+    meta: {
+      isAuth: false,
+      keepAlive: false
+    }
+  },
+  {
     path: '/production',
     name: 'Production',
     component: () => import('../views/production'),
